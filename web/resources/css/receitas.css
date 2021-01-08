@@ -1,0 +1,121 @@
+@charset "UTF-8"; 
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap');
+/*        color: #18d254;*/
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right:  auto;
+    padding: 0px; 
+    
+}
+
+@media 
+(min-width: 360px){
+
+    .fieldInserirReceita{
+
+        font-size: 100%!important;
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+        border-color: #1849d2;
+        border-radius: 10px 10px 10px 10px;
+        text-align : center;
+        margin-top: 3%!important;
+        width: 90%!important;
+
+    }
+    .gridInserirReceitas{
+        text-align:  center!important;        
+        margin-left: 8%!important;
+        text-align: center;
+
+    }
+    .lblReceita{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+    .gridLblInserirReceita{
+        text-align: center!important;
+    }
+    .idLblInserirReceita{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+    .lblInserirReceita{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+
+    .gridReceitas{
+        margin-top: 1%;
+        text-align:  center!important;
+    }
+    .lblMesRepetir{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+    .txtMesesRepetir{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+        margin-left: 15%!important;
+        text-align:  center!important;
+    }
+    .gridMesesRepetir{
+        margin-top: 3%!important;
+        
+    }
+    .gridValorReceita{
+        margin-top: 3%!important;
+    }
+    .lblValor{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2; 
+    }
+    .gridBtnInserirReceitas{
+        margin-top: 3%!important;
+        margin-left: 15%!important;
+       
+    }
+    .receitasBtnVoltar{
+       background-color: white !important;
+       font-size: 80%!important;
+       border-color:#1849d2!important; 
+    }
+    .btnSalvarReceita{       
+       background-color: white !important;
+       font-size: 80%!important;
+       border-color:#1849d2!important;
+       margin-left: 10%!important;
+       
+    }
+    .txtValor{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+        margin-left: 7%!important;
+        text-align:  center!important;
+    }
+    .txtReceita{
+       
+        text-align:  center!important;
+    }
+
+    .container {
+        max-width: 360px;
+        margin: 0 auto;
+
+    }
+}
+
+
+
+

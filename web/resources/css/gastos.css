@@ -1,0 +1,151 @@
+@charset "UTF-8"; 
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap');
+/*        color: #18d254;*/
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right:  auto;
+    padding: 0px; 
+
+}
+
+@media 
+(min-width: 360px){
+   
+    .ui-state-default{
+        background-color: white!important;        
+    }
+    .ui-menu{
+        background-color: white!important;
+    }
+    .ui-menuitem{
+        background-color: white!important;
+    }
+    .ui-widget-header {
+        background-color: white!important;
+        border-color: blue;
+    }
+
+    .panelInserirGastos{
+        background-color: white!important;
+        border: none
+    }
+    .ui-fieldset .ui-fieldset-legend{
+        border-color: blue;
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+        background-color: white;
+        border-radius: 10px 10px 10px 10px;
+        font-weight: bold;
+    }
+
+    .lblGasto{
+        font-size: 100%!important;
+        font-family: 'Hind',sans-serif;
+        color: #1849d2
+    }
+    .gridGasto{
+        font-size: 100%!important;
+        font-family: 'Hind',sans-serif;
+        color: #1849d2
+    }
+    .gridInserirGastos{
+        text-align: center!important;
+    }
+    .fieldSetRelatorios{
+        margin-top: 3%;width: 95%;
+        border-color: blue;
+        border-radius: 10px 10px 10px 10px;
+        font-family: 'Hind',sans-serif;
+        text-align: center;
+    }
+    .proximoMes{
+        font-size: 80%!important;
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+    .lblMeses{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2;
+    }
+    .txtGastoRepete{
+        text-align: center!important;
+        margin-left: 5%!important;
+    }
+    .txtGastoGrid{
+        margin-left: 10%!important;
+    }
+    .radioRadioProximoMes{
+        font-size: 80%!important;
+    }
+    .valorGasto{
+        font-size: 100%!important;
+        font-family: 'Hind',sans-serif;       
+    }
+    .gastoRepete{
+        margin-left: 55%!important;
+        border-radius: 10px 10px 10px 10px;
+        background-color: #0eaff5!important;
+
+    }
+    .ui-radiobutton-icon{
+        border-color: black!important;
+    }
+    .fa-retweet {
+        font-size: 100%!important;
+        color: #1849d2!important;           
+
+    }
+    .ui-datatable * {
+        border : 0px !important;
+
+    }
+    .pi-list{
+        color: #18d254;
+    }
+    .txtGasto{        
+        text-align: center;
+        margin-left: 11%!important;
+    }
+    .DescricaoGasto{        
+        text-align: center;
+        margin-left: 5%!important;
+    }
+    .gridValor{
+        margin-top: 3%!important;
+    }
+    .gridMesQueVem{
+        margin-top: 3%!important;
+    }
+    .gridMesRepete{
+        margin-top: 3%!important;
+    }
+    .btnSalvarCancelarGastoCartao{
+        background-color: white;
+        font-size: 80%!important;
+        border-color:#1849d2!important;
+        
+    }
+   
+
+    .container {
+        max-width: 360px;
+        margin: 0 auto;
+
+
+    }
+}
+
+
+
+

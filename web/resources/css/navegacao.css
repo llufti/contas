@@ -1,0 +1,77 @@
+@charset "UTF-8"; 
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap');
+/*        color: #18d254;*/
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right:  auto;
+    padding: 0px;  
+
+}
+
+@media 
+(min-width: 360px){ 
+
+    .btnMenuRelatorio{
+        font-size: 75%;    
+        background-color: white; 
+        margin-left:-7%!important;
+        margin-top: -15%!important;
+    }
+
+    .botaoDespesa{ 
+        border-color:#1849d2; 
+        background-color: white;
+        margin-left: 2%;
+        font-size: 80%;
+        border-radius:  15px  15px 15px 15px;
+
+    }
+    .botaoReceita{
+        font-family: 'Hind',sans-serif!important;   
+        border-color:#1849d2; 
+        background-color: white;
+        margin-left: 2%;
+        font-size: 80%;
+        border-radius:  15px  15px 15px 15px;
+    }
+    .botaoRelatorios{
+        font-family: 'Hind',sans-serif!important;   
+        border-color:#1849d2; 
+        background-color: white;
+        margin-left: 2%;
+        font-size: 80%;
+        border-radius:  15px  15px 15px 15px;       
+    }
+    /*    ui-button-icon-left ui-icon ui-c fa fa-snowflake-o*/
+    .fa-plus {
+        font-size: 100%!important;
+        color: #18d254!important; 
+
+    }
+
+    .pi-bars{
+        color: #18d254!important; 
+        font-size: 130%!important;
+    }
+
+    .container {
+        max-width: 360px;
+        margin: 0 auto;
+
+    }
+}
+
+
+
+

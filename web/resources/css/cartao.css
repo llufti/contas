@@ -1,0 +1,193 @@
+@charset "UTF-8"; 
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap');
+/*        color: #18d254;*/
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right:  auto;
+    padding: 0px;  
+
+}
+
+@media 
+(min-width: 360px){
+
+
+    .top-bar{
+        width: 100%;
+        height: 30px;
+        background: #141414;
+        color: #888;
+        line-height: 30px;
+    }
+    .top-bar .player-controls {
+        float: left;
+    }
+    .top-bar .player-controls span{
+        cursor: pointer;
+        padding: 0 5px;
+        -webkit-transition: all linear 0.2s;
+    }
+    .top-bar .player-controls span:hover {
+        color: #EEE;
+    }
+    .top-bar .player-display {
+        float: left;
+        float: right;
+        margin-left: 50px;
+    }
+    .top-bar .player-display .player-current-track {
+        color: white;
+    }
+    .top-bar .player {
+        float: left;
+    }
+    .top-bar .player-timeline {
+        float: left;
+        max-width: 200px;
+        width: 200px;
+        height: 4px;
+        margin-top: 13px;
+        background: #555;
+        margin-left: 20px;
+    }
+    .top-bar .player-timeline-control {
+        height: 4px;
+        background: #999;
+    }
+    .idLblTitular{
+        font-family: 'Hind',sans-serif;
+        font-weight: bold!important;
+    }
+
+    .ui-datatable-header {
+        background-color: white!important;    
+    }
+
+    .ui-datatable * {
+        border : 0px !important;
+
+    }
+    .dadataTableCartoesCadastrados{
+
+
+    }
+
+    .btnDataTable{
+        background-color: white!important;
+        border-radius: 10px 10px 10px 10px;
+        border-color: #1849d2!important;
+    }
+    .btnMenuCartaoDeCredito{
+        background-color: white!important;
+        border-radius: 10px 10px 10px 10px;
+        border-color: #1849d2!important;
+
+    }
+    .lblCartoesCadastrados{
+        font-family: 'Hind',sans-serif;
+        color: #1849d2!important;
+        margin-left: 15%!important;
+
+    }
+    .widget-header{
+        background-color: red!important;
+    }
+    .pi-ellipsis-h{
+        color:#18d254;
+        font-weight: bold!important;
+    }
+
+
+
+    .ui-menuitem{
+        background-color: white!important;
+    }
+    .ui-widget-header {
+        background-color: white!important;
+        border-color: blue;
+    }
+    .ui-menu{
+        background-color: white!important;
+        font-family: 'Hind',sans-serif;
+    }
+    .gridTitular{
+        margin-top: 5%!important;
+    }
+
+    .gridBandeira{
+        margin-top: 2%!important;
+    }
+    .gridNumero{
+        margin-top: 2%!important;
+    }
+    .panelInserirCartao{
+        margin-top: 3%!important;
+
+    }
+    .lblTitular{
+    }
+    .txtTitular{
+        width: 90%!important;
+        text-align: center!important;
+    }
+    .lblVencimento{
+
+    }
+
+    .txtVencimento{
+        text-align: center!important;
+
+
+    }
+    .lblFechamento{        
+    }
+    .gridItemFechamento{
+    }
+    .txtFechamento{
+        text-align: center!important;
+    }
+    .lblBandeira{
+    }
+    .txtBandeira{
+        text-align: center!important;
+        width: 70%!important;
+    }
+    .lblNumero{
+    }
+    .txtNumero{
+        text-align: center!important;
+        width: 70%!important;
+    }
+    .btnVoltar{
+        background-color: white!important;
+        font-size: 85%!important;
+        border-color:#1849d2!important;
+    }
+    .btnSalvar{
+        background-color: white!important;
+        font-size: 85%!important;
+        border-color:#1849d2!important;
+    }
+
+
+    .container {
+        max-width: 360px;
+        margin: 0 auto;
+
+    }
+}
+
+
+
+

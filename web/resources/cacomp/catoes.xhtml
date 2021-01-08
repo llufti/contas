@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:panelGrid id="panelGridSelecionarCartao" columns="1" rendered="#{controleDeContasBean.renderizacao.selecionarCartao == true}" >
+
+            
+
+            <p:dataTable id="cartoesCadastrados" class="dadataTableCartoesCadastrados" scrollable="true"  scrollHeight="130" value="#{controleDeContasBean.listaCartaoCredito}" var="cartoes"
+                         style="font-size: 70%;font-family: 'Hind',sans-serif;text-align: center!important" >
+
+
+                <p:column  style="width: 5%"   >
+                    <p:commandLink rendered="#{controleDeContasBean.renderizacao.colunaSelecionarCartao == true}" update="@form" action="#{controleDeContasBean.cartaoInserirGastosComCartao(cartoes)}" style="font-size: 160%" >
+                        <i class="pi pi-thumbs-up"  ></i>                           
+                    </p:commandLink>
+                    <p:commandLink rendered="#{controleDeContasBean.renderizacao.colunaEditarCartao == true}" update="@form" style="font-size: 160%"  action="#{controleDeContasBean.cartaoEditarCartao(cartoes)}" >
+                        <i class="pi pi-pencil"  ></i>                           
+                    </p:commandLink>
+                    <p:commandLink rendered="#{controleDeContasBean.renderizacao.colunaDeletarCartao == true}" update="@form" action="#{controleDeContasBean.cartaoDeletarCartao(cartoes)}" style="font-size: 160%"  >
+                        <i class="pi pi-times"  ></i>                           
+                    </p:commandLink>
+                </p:column>
+                <p:column headerText="NOME" style="width: 70%"   >
+                    <h:outputText value="#{cartoes.nome}" />                            
+                </p:column>
+                <p:column headerText="FEC." style="width: 2%"  rendered="#{controleDeContasBean.renderizacao.colunanaVencimentoFechamento == true}"   >
+                    <h:outputText value="#{cartoes.fechamentoFatura}" />                            
+                </p:column>
+                <p:column headerText="VEN." style="width: 2%" rendered="#{controleDeContasBean.renderizacao.colunanaVencimentoFechamento == true}"  >
+                    <h:outputText value="#{cartoes.vencimentoFatura}" />                            
+                </p:column>
+                <p:column headerText="BAND." style="width: 40%" rendered="#{controleDeContasBean.renderizacao.colunanaBandeiraNumero == true}"  >
+                    <h:outputText value="#{cartoes.bandeira}" />                            
+                </p:column>
+                <p:column headerText="NUM." style="width: 40%" rendered="#{controleDeContasBean.renderizacao.colunanaBandeiraNumero == true}"  >
+                    <h:outputText value="#{cartoes.numero}" />                            
+                </p:column>
+
+
+            </p:dataTable>
+        </h:panelGrid>
+    </cc:implementation>
+</html>

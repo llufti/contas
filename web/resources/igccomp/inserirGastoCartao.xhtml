@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:panel id="idPanelGastosCartao" style="background-color: white!important;border: none" rendered="#{controleDeContasBean.renderizacao.inserirDespesasCartao == true}">
+
+            <p:defaultCommand target="btnGastosCartao" scope="idPanelGastosCartao"  />
+            <h:panelGrid id="idGridGastosCartao" class="gridInserirGastos" cellspacing="15" >
+
+                <h:panelGrid columns="2" class="gridGasto"   >
+                    <p:outputLabel id="idLblGastoCartao" class="lblGasto" value="GASTO:"  />
+                    <p:inputText id="idTxtGastoCartao" class="DescricaoGasto" value="#{controleDeContasBean.gastos.descGasto}" size="15" />
+                </h:panelGrid>
+
+                <h:panelGrid columns="3" class="gridGasto">
+                    <p:outputLabel id="idLblGastocARTAOvALOR" class="valorGasto" value="VALOR:"  />
+                    <p:inputNumber id="idTxtGastovALOR" class="txtGasto" size="5" value="#{controleDeContasBean.gastos.valor}"  >
+                    </p:inputNumber>  
+                    <p:commandButton id="idBtnGastocARTAO" class="gastoRepete"  icon="fa fa-fw fa-retweet" action="#{controleDeContasBean.renderizacao.exibirMesesQueRepete()}" 
+                                     update="@form" />
+                </h:panelGrid>
+
+
+                <h:panelGrid id="idGridMesQueVemcARTAO" class="gridGasto" columns="3"  rendered="#{controleDeContasBean.renderizacao.selecionarProximoMes == true}">
+                    <p:outputLabel id="lblProximoMesCartao" class="proximoMes" value="PROXIMO MES:"  />
+                    <p:selectOneRadio id="idRadioGastoProximoMesCartao" class="radioRadioProximoMes" unselectable="true" value="#{controleDeContasBean.gastos.proximoMes}"  >
+                        <f:selectItem itemLabel="SIM" itemValue="sim"   />                            
+                        <f:selectItem itemLabel="NÃO" itemValue="nao"   />                            
+                    </p:selectOneRadio>
+                </h:panelGrid>
+
+
+                <h:panelGrid columns="2" class="gridMesRepete" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  >
+                    <p:outputLabel id="idLblMesesCartao" class="lblMeses" value="MESES QUE REPETE:"  />
+
+                    <p:inputText id="idTxtGastoRepeteCartao" class="txtGastoRepete" value="#{controleDeContasBean.gastos.gastosRepete}" size="1" />
+                </h:panelGrid>
+            </h:panelGrid> 
+            <h:panelGrid columns="2" cellspacing="15" >
+                <p:commandButton class="btnSalvarCancelarGastoCartao"  action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  value="VOLTAR" />
+                <p:commandButton class="btnSalvarCancelarGastoCartao" id="btnGastosCartao"   action="#{controleDeContasBean.cartaoSalvarGastosComCartao()}" update="@form"  value="SALVAR" /> 
+            </h:panelGrid>
+
+        </p:panel>
+    </cc:implementation>
+</html>

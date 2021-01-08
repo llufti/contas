@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="Resuno" shortDescription="Este componente se refere ao resumo dos meses selecionados" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <p:sidebar  widgetVar="sidebar1" baseZIndex="10000"   >
+            <p:menu style="width: 100%">
+                <p:submenu label="Despesas">
+                    <p:menuitem value="Adicionar Despesas" action="#{controleDeContasBean.exibirTelaCategoriasGasto()}"   icon="pi pi-save" update="@form"/>
+                    <p:menuitem value="Visualizar Despesas" action="#{controleDeContasBean.exibirTelaRelatorios()}"  icon="pi pi-search" update="@form" />
+                </p:submenu>
+                <p:submenu label="Receitas">
+                    <p:menuitem value="Adicionar Receitas" action="#{controleDeContasBean.exibirTelaInserirReceitas()}"  icon="pi pi-plus" update="@form" />
+                    <p:menuitem value="Visualizar Receitas" action="#{controleDeContasBean.exibirTabelaReceitas()}"   icon="pi pi-search" update="@form" />
+                </p:submenu>
+                <p:submenu label="Serviços">
+                    <p:menuitem value="Rascunho(Despesas)" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
+                    <p:menuitem value="Supermercado" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
+                    <p:menuitem value="Saude Finaceira" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
+                </p:submenu>
+
+            </p:menu>
+            <p:commandButton class="btnVoltarSlideBar" value="Cancel" oncomplete="PF('sidebar1').hide()"/>
+        </p:sidebar>
+        <p:panel style="border-color: #003333">
+            <h:panelGrid columns="3" style="text-align: center" width="100%">
+                <p:commandButton type="button" style="font-size: 80%!important;"  icon="pi pi-list" 
+                                 onclick="PF('sidebar1').show()" />
+                <p:outputLabel value="RESUMO DO MÊS" class="lblTituloResumoDoMes" />
+                <p:commandLink  rendered="#{controleDeContasBean.renderizacao.resumoDoMes == false}"
+                                action="#{controleDeContasBean.renderizacao.exibirResumoDoMes()}" update="@form">
+                    <p:graphicImage  library="images" name="icones.jpg" width="40" height="20" />
+                </p:commandLink>
+                <p:commandLink  rendered="#{controleDeContasBean.renderizacao.resumoDoMes}" 
+                                action="#{controleDeContasBean.renderizacao.ocultarResumoDoMes()}" update="@form" >
+                    <p:graphicImage  library="images" name="icones1.jpg" width="40" height="20" />
+                </p:commandLink>
+            </h:panelGrid>
+
+
+
+            <h:panelGrid columns="3"   width="100%" rendered="#{controleDeContasBean.renderizacao.resumoDoMes}"  >
+                <h:panelGrid columns="1">
+                    <p:commandButton class="btnSelecionasMes" action="#{controleDeContasBean.selececionarMesAnterior()}" update="@form" icon="pi pi-chevron-left" />
+                </h:panelGrid>
+                <h:panelGrid id="idPgResumoDoMes"  columns="2"  width="100%" >
+                    <p:outputLabel id="idlblmesAno" class="lblMesAno" value="MÊS/ANO:" />                    
+                    <p:outputLabel id="idDadoMesSelecionado" class="dadoMesSelecionado" value="#{controleDeContasBean.controleDeMesSelecionado.mesAnoSelecionado}" style="color:#{controleDeContasBean.resumoDoMes.corDoSaldo}" />                    
+                </h:panelGrid>
+                <h:panelGrid columns="1"  >
+                    <p:commandButton class="btnSelecionasMes" icon="pi pi-chevron-right" action="#{controleDeContasBean.selececionarProximoMes()}" update="@form" />
+                </h:panelGrid>
+            </h:panelGrid>
+            <h:panelGrid columns="3"   class="pgDescricaoDadosResumoMes" width="100%" rendered="#{controleDeContasBean.renderizacao.resumoDoMes}" >                    
+                <p:outputLabel id="idDescricaoReceitas" class="lblDescricaoReceitas" value="RECEITAS"  />                  
+                <p:outputLabel id="idDescricaoDespesas" class="lblDescricaoDespesas" value="DESPESAS" />
+                <p:outputLabel id="idDescricaoSaldo"    class="lblDescricaoSaldo" value="SALDO"  />                    
+
+                <h:outputText id="idDadosResumoDoMesReceitas" class="lblDadosResumoDoMesReceitas" value="#{controleDeContasBean.resumoDoMes.receitas}" >
+                    <f:convertNumber locale="pt_BR" type="currency" currencySymbol="R$"   />
+                </h:outputText>              
+                <h:outputText id="idDadosResumoDoMesDespesas" class="lblDadosResumoDoMesDespesas"  value="#{controleDeContasBean.resumoDoMes.despesas}" >
+                    <f:convertNumber locale="pt_BR" type="currency" currencySymbol="R$" />
+                </h:outputText>
+                <h:outputText  id="idDadosResumoDoMesSaldo" class="lblDadosResumoDoMesSaldo" value="#{controleDeContasBean.resumoDoMes.saldo}" style="color:#{controleDeContasBean.resumoDoMes.corDoSaldo}" >
+                    <f:convertNumber locale="pt_BR" type="currency" currencySymbol="R$"    />                        
+                </h:outputText>
+
+            </h:panelGrid>
+        </p:panel>
+        <p:panel>
+            
+            <h:panelGrid columns="1" rendered="#{controleDeContasBean.renderizacaoSubTelas.tituloSemMenu}"  >
+                <p:outputLabel value="#{controleDeContasBean.tituloDescricao.tituloDescricao}" class="lblTituloDescricao" />
+            </h:panelGrid>
+            <div id="idDivTituloComMenuRelatorios" class="ui-g" style="display:#{controleDeContasBean.renderizacaoSubTelas.exibirTituloComMenuRelatorios}"  >
+                <div class="ui-g-10"   >
+                    <h:panelGrid columns="2" rendered="#{controleDeContasBean.renderizacaoSubTelas.tituloComMenuRelatorios}" >
+                        <p:outputLabel value="#{controleDeContasBean.tituloDescricao.tituloDescricao}" class="lblTituloDescricaoViSualizar"  />
+                    </h:panelGrid>
+                </div>
+                <div class="ui-g-2">
+                    <h:panelGrid columns="2"  rendered="#{controleDeContasBean.renderizacaoSubTelas.tituloComMenuRelatorios}" >
+                        <p:commandButton  id="menuGastos" class="btnMenuRelatorio" icon="pi pi-list"   />
+                    </h:panelGrid>
+                </div>
+            </div>
+            <div id="idDivTituloSemMenuRelatorios" class="ui-g" style="display:#{controleDeContasBean.renderizacaoSubTelas.exibirTituloComMenuCartao}"  >
+                <div class="ui-g-10"   >
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel value="#{controleDeContasBean.tituloDescricao.tituloDescricao}" class="lblTituloDescricaoViSualizar" rendered="#{controleDeContasBean.renderizacaoSubTelas.exibirTituloComMenuCartao }" />
+                    </h:panelGrid>
+                </div>
+                <div class="ui-g-2">
+                    <h:panelGrid columns="2" >
+                        <p:commandButton id="idBtnDataTable" class="btnMenuRelatorio"  type="button" icon="pi pi-list" />
+                    </h:panelGrid>
+                </div>
+            </div>
+
+            <p:menu overlay="true" trigger="idBtnDataTable" my="left top" at="left bottom"  >
+                <p:submenu label="Adicionar Cartão">
+                    <p:menuitem value="Adicionar"  update="@form" icon="pi pi-plus-circle" action="#{controleDeContasBean.cartaoAdicionarCartao()}" />                                   
+                </p:submenu>
+                <p:submenu label="Botões">
+                    <p:menuitem value="Selecionar"  update="@form" icon="pi pi-thumbs-up" action="#{controleDeContasBean.renderizacao.exibirSelecionar()}" />
+                    <p:menuitem value="Editar"  update="@form" icon="pi pi-pencil" action="#{controleDeContasBean.renderizacao.exibirEditar()}" />
+                    <p:menuitem value="Deletar" update="@form" icon="pi pi-times" action="#{controleDeContasBean.renderizacao.exibirDeletar()}" />
+                </p:submenu>
+                <p:submenu label="Exibir Coluna" >
+                    <p:menuitem value="Bandeira/Numero"  update="@form" icon="pi pi-align-left" action="#{controleDeContasBean.renderizacao.exibirBandeiraNumero()}" /> 
+                    <p:menuitem value="Fecham/Vencim" update="@form" icon="pi pi-th-large" action="#{controleDeContasBean.renderizacao.exibirVencimentoFechamento()}" /> 
+                </p:submenu>
+
+            </p:menu>
+
+
+            <p:menu overlay="true" trigger="menuGastos" my="left top" at="left bottom" style="font-size: 90%" >
+
+                <p:submenu label="Exibir" >
+                    <p:menuitem value="Debitos"  update="@form" icon="pi pi-pencil" action="#{controleDeContasBean.renderizacao.exibirColunaEdita()}" />
+                    <p:menuitem value="Cartão de Crédito" update="@form" icon="pi pi-times" action="#{controleDeContasBean.cartaoBuscarGastosCartoes()}" />
+                </p:submenu>
+                
+                <p:submenu label="Editar/Deletar" >
+                    <p:menuitem value="Editar"  update="@form" icon="pi pi-pencil" action="#{controleDeContasBean.renderizacao.exibirColunaEdita()}" />
+                    <p:menuitem value="Deletar" update="@form" icon="pi pi-times" action="#{controleDeContasBean.renderizacao.exibirColunaDeleta()}" />
+                </p:submenu>
+
+            </p:menu>
+        </p:panel>
+    </cc:implementation>
+</html>

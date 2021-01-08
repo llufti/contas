@@ -1,0 +1,114 @@
+@charset "UTF-8"; 
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap');
+/*        color: #18d254;*/
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right:  auto;
+    padding: 0px; 
+
+}
+
+@media 
+(min-width: 360px){ 
+
+
+
+    .btnSelecionasMes{
+        font-size: 100%!important;
+        background-color: white!important;
+        border: none!important;
+    }
+    .lblResumoDoMes{
+        font-size: 100%!important;
+        font-family: 'Hind',sans-serif!important;
+        font-weight: bold!important;    
+
+    }
+
+    .lblDescricaoReceitas{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+        color: #18d254;
+
+    }
+    .pi-chevron-left{
+        color: #1849d2!important;
+    }
+    .pi-chevron-right{
+        color: #1849d2!important;
+    }
+    .lblDescricaoDespesas{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+        color: #18d254;
+
+
+    }
+    .lblDescricaoSaldo{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+        color: #18d254;
+    }
+
+    .pgLblResumoDoMes{
+    }
+    .dadoMesSelecionado{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif; 
+    }
+    .ui-sidebar-left{
+        width: 80%!important; 
+    }
+
+    .lblMesAno{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif; 
+    }
+    .pgDescricaoDadosResumoMes{
+        text-align: center!important;
+        width: 100%!important;
+    }
+    .lblDadosResumoDoMesReceitas{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif; 
+        color: blue;
+
+    }
+    .lblDadosResumoDoMesDespesas{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+        color: blue;
+    }
+    .lblDadosResumoDoMesSaldo{
+        font-size: 90%!important;
+        font-family: 'Hind',sans-serif;
+    }
+    .receita{
+        width: 100%!important;
+        color: blue!important;
+    }
+    .idDadosResumoDoMesDespesas{
+        width: 100%!important;
+    }
+
+    .container {
+        max-width: 360px;
+        margin: 0 auto;
+
+    }
+}
+
+
+
+

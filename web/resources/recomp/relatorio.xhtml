@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div align="center"  >
+            <h:panelGrid columns="1" style="text-align: center!important;" rendered="#{controleDeContasBean.renderizacao.relatorios == true}">
+                <p:dataTable id="receitas" scrollable="true"  scrollHeight="240" value="#{controleDeContasBean.listaReceitas}" var="receitas"
+                             style="font-size: 80%;font-family: 'Hind',sans-serif;margin-top: 3%"
+                             rendered="#{controleDeContasBean.renderizacao.dataTableDeReceitas == true }" >
+
+                    <p:column headerText="RECEITAS" style="text-align: center!important;width: 40%" >
+                        <h:outputText value="#{receitas.receitasDesc}" />                            
+                    </p:column>
+                    <p:column headerText="VALOR(R$)" style="text-align: center!important;width: 40%" >
+
+                        <h:outputText value="#{receitas.receitasValor}"  >
+                            <f:convertNumber  locale="pt_BR" type="number" pattern=".00"  />
+                        </h:outputText>
+
+                    </p:column>                        
+                    <p:column headerText="DATA" style="text-align: center!important;width: 30%" >
+
+                        <h:outputText value="#{receitas.receitasData}"  >
+                            <f:convertDateTime  locale="pt_BR"  pattern="dd/MM"  />
+                        </h:outputText>
+
+                    </p:column>   
+
+                    <p:column style="width: 1%!important;text-align: center!important" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true || controleDeContasBean.renderizacao.colunaDeletar == true }"  >
+                        <p:commandButton icon="pi pi-pencil" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true}" action="#{controleDeContasBean.receitasEditarReceita(receitas)}" update="@form"  />                     
+
+                        <p:commandButton icon="pi pi-times" rendered="#{controleDeContasBean.renderizacao.colunaDeletar == true}" action="#{controleDeContasBean.receitaDeletarReceita(receitas)}" update="@form"   />                     
+                    </p:column>
+
+
+                </p:dataTable>
+
+
+                <p:dataTable id="gastos" scrollable="true"  scrollHeight="300" value="#{controleDeContasBean.listaDeGastos}" var="gastos"
+                             style="font-size: 80%;font-family: 'Hind',sans-serif;margin-top: 3%"
+                             rendered="#{controleDeContasBean.renderizacao.dataTableDeGastos == true }" >
+
+
+                    <p:column headerText="GASTOS" style="width: 70%;text-align: left!important"  >
+                        <h:outputText value="#{gastos.descGasto}" />                            
+                    </p:column>
+                    <p:column headerText="VALOR(R$)" style="width: 30%;text-align: center!important"   >
+
+                        <h:outputText value="#{gastos.valor}"  >
+                            <f:convertNumber  locale="pt_BR" type="number" pattern=".00"  />
+                        </h:outputText>
+
+                    </p:column>                        
+                    <p:column style="width: 2%" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true || controleDeContasBean.renderizacao.colunaDeletar == true }"  >
+                        <p:commandButton icon="pi pi-pencil" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true}" action="#{controleDeContasBean.gastosEditarGastos(gastos)}" update="@form"  />                     
+
+                        <p:commandButton icon="pi pi-times" rendered="#{controleDeContasBean.renderizacao.colunaDeletar == true}" action="#{controleDeContasBean.gastosDeletarGastos(gastos)}" update="@form"   />                     
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGrid>
+        </div>
+    </cc:implementation>
+</html>

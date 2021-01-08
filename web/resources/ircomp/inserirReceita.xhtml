@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+       
+
+        <h:panelGrid id="panelInserirReceitas" class="gridInserirReceitas" cellspacing="10" columns="1"  rendered="#{controleDeContasBean.renderizacao.inserirReceitas == true}">
+                <p:defaultCommand target="idBtnSalvarReceitas" scope="panelInserirReceitas"  />
+
+                <h:panelGrid columns="2" id="idGridReceita" class="gridReceitas"  >
+                    <p:outputLabel id="idLblReceita" class="lblReceita" value="RECEITA:"   />
+                    <p:inputText id="idTxtReceita" class="txtReceita" value="#{controleDeContasBean.receitas.receitasDesc}" size="13"   />
+                </h:panelGrid>       
+
+
+                <h:panelGrid id="idGridValo" class="gridValorReceita" columns="3" >
+                    <p:outputLabel id="idLblValor" class="lblValor" value="VALOR:" />
+                    <p:inputNumber id="idTxtValor" class="txtValor" size="5" value="#{controleDeContasBean.receitas.receitasValor}"  >
+                    </p:inputNumber>  
+                    <p:commandLink style="margin-left: 75%;margin-top: -11%;display: block" action="#{controleDeContasBean.renderizacao.exibirMesesQueRepeteReceita()}" update="@form"  >
+                        <p:graphicImage library="images" name= "repetir.png" width="30" />
+                    </p:commandLink>
+                </h:panelGrid>
+
+
+                <h:panelGrid id="idMesesRepetir" class="gridMesesRepetir" columns="2" rendered="#{controleDeContasBean.renderizacao.receitaRepetem == true}" >
+                    <p:outputLabel id="idLblMesesRepetir" class="lblMesRepetir" value="MESES:"  />
+
+                    <p:inputText id="idTxtMesesRepetir" class="txtMesesRepetir" value="#{controleDeContasBean.receitas.receitasMesesRepetir}" size="1"  />
+
+                </h:panelGrid>
+
+
+                <h:panelGrid columns="2" id="idBotoesInserirReceita" class="gridBtnInserirReceitas" >
+                    <p:commandButton id="idBtnVoltar" class="receitasBtnVoltar"  action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  value="VOLTAR" />
+                    <p:commandButton id="idBtnSalvarReceitas" class="btnSalvarReceita" action="#{controleDeContasBean.salvarReceita()}" update="@form"  value="SALVAR" /> 
+                </h:panelGrid>
+            </h:panelGrid>
+    </cc:implementation>
+</html>

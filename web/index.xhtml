@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:rm="http://xmlns.jcp.org/jsf/composite/rmcomp"
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gccomp"
+      xmlns:gf="http://xmlns.jcp.org/jsf/composite/gfcomp"
+      xmlns:id="http://xmlns.jcp.org/jsf/composite/idcomp"
+      xmlns:ca="http://xmlns.jcp.org/jsf/composite/cacomp"
+      xmlns:ic="http://xmlns.jcp.org/jsf/composite/iccomp"
+      xmlns:ir="http://xmlns.jcp.org/jsf/composite/ircomp"
+      xmlns:re="http://xmlns.jcp.org/jsf/composite/recomp"
+      xmlns:ig="http://xmlns.jcp.org/jsf/composite/igccomp">
+    <h:head>
+        <title>Controle Orçamento</title>
+
+        <h:outputStylesheet library="css" name="resumomes.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="navegacao.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="categoriaGastos.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="gastos.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="receitas.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="cartao.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="gasto.js"></h:outputScript>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.13.0/css/all.min-jsf.css" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.13.0/css/v4-shims.min-jsf.css" />
+        <meta name="viewport" content="width=device-width"  />
+    </h:head>
+    <h:body>
+        <div  class="container" align="center">
+            <h:form>
+                <p:growl id="growl"  life="2000" />
+                <rm:ResumoDoMes id="resumoDoMes" />           
+                <gc:gastosCategoria id="gastosPorCategoria" />
+                <id:inserirDespesas id="inserirDespesas" />
+                <ca:catoes id="cartoes" />
+                <ic:inserirCartao id="inserirCartao" />
+                <ir:inserirReceita id="inserirReceita"  />
+                <gf:grafico id="grafico" />
+                <re:relatorio id="relatorio" />
+                <ig:inserirGastoCartao id="inserirGastoCartao" />
+               
+            </h:form>
+        </div>
+
+    </h:body>
+</html>
+
