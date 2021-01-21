@@ -75,7 +75,7 @@ public class CartaoCreditoDao {
             diaAtual = calCartao.get(Calendar.DAY_OF_MONTH);
             calCartao.setTime(cartao.getData());
 
-            if (diaAtual > fechamento && diaAtual < vencimento) { //se o dia da compra estiver dentro do melhor dia de compra
+            if (diaAtual >= fechamento && diaAtual < vencimento || diaAtual > vencimento ) { //se o dia da compra estiver dentro do melhor dia de compra
                 System.out.println("executou o melhor dia de compra ");
                 Calendar calMesAtual = Calendar.getInstance(); // cria uma instancia que pega o mes atual
                 calMesAtual.setTime(cartao.getData()); // pega o mes atual
@@ -89,8 +89,8 @@ public class CartaoCreditoDao {
                     if (gastos.getId() == null) {
                         ps = conexao.prepareCall("INSERT INTO `gastosCartao` (`gasto`,`idUsuario`,`idCartao`,`dataGastoCartao`,`valor`,`categoria`) VALUES (?,?,?,?,?,?)");
                     } else {
-                        ps = conexao.prepareStatement("update gastos set gasto=?,idUsuario=?,idCartao=?,dataGastoCartao=?,valor=? ,categoria=? where idGastosCartao=?");
-                        ps.setInt(6, gastos.getId());
+                        ps = conexao.prepareStatement("update gastoscartao set gasto=?,idUsuario=?,idCartao=?,dataGastoCartao=?,valor=? ,categoria=? where idGastosCartao=?");
+                        ps.setInt(7, gastos.getId());
                     }
                     ps.setString(1, gastos.getDescGasto());
                     ps.setInt(2, usuarios.getIdCliente());
@@ -102,9 +102,9 @@ public class CartaoCreditoDao {
                     ps.execute();
 
                 }
-            } else { // se o cartão não esta no melhor dia de compra 
-
-                for (h = 0; h < mesesQueRepetem; h++) {
+            } else  { // se o cartão não esta no melhor dia de compra 
+    
+               for (h = 0; h < mesesQueRepetem; h++) {
                     Calendar calMesVem = Calendar.getInstance();
                     calMesVem.setTime(cartao.getData());
                     calMesVem.add(Calendar.MONTH, h);
@@ -112,7 +112,7 @@ public class CartaoCreditoDao {
                         ps = conexao.prepareCall("INSERT INTO `gastosCartao` (`gasto`,`idUsuario`,`idCartao`,`dataGastoCartao`,`valor`,`categoria`) VALUES (?,?,?,?,?,?)");
                     } else {
                         ps = conexao.prepareStatement("update gastos set gasto=?, idUsuario=?, idCartao=?, dataGastoCartao=?, valor=? ,categoria=? where idGastosCartao=?");
-                        ps.setInt(6, gastos.getId());
+                        ps.setInt(7, gastos.getId());
                     }
                     ps.setString(1, gastos.getDescGasto());
                     ps.setInt(2, usuarios.getIdCliente());
@@ -160,14 +160,74 @@ public class CartaoCreditoDao {
 
         }
     }
-    public List<SuperClasse> cartaoBuscarGastosCartoes(CartaoCredito cartao, Gastos gastos, SuperClasse superClasse, Usuarios usuarios) throws ErroSistema {
+
+    public List<CartaoCredito> cartaoBuscarIdCartoesPeloUsuario(CartaoCredito cartao) throws ErroSistema {
         try {
 
             Connection conexao = FabricaConexao.getConexao();
-            PreparedStatement ps = conexao.prepareStatement("SELECT cartao.nome, cartao.bandeira, cartao.numero, gastoscartao.idGastosCartao, gastoscartao.gasto, gastoscartao.idCartao, gastoscartao.dataGastoCartao, gastoscartao.valor, gastoscartao.categoria FROM gastoscartao JOIN cartao ON gastoscartao.idCartao = cartao.idCartao WHERE gastoscartao.idCartao LIKE ? AND YEAR(gastoscartao.dataGastoCartao) LIKE ? AND MONTH(gastoscartao.dataGastoCartao) LIKE ?  AND gastoscartao.idUsuario = 1");
-            ps.setInt(1, cartao.getIdCartao());
-            ps.setInt(2,ControleDeMesSelecionado.intAno);
-            ps.setInt(3, ControleDeMesSelecionado.intMes);
+            PreparedStatement ps = conexao.prepareStatement("SELECT cartao.idCartao, cartao.numero  FROM cartao ");
+
+            ResultSet resultSet = ps.executeQuery();
+
+            List<CartaoCredito> entidades = new ArrayList<>();
+            while (resultSet.next()) {
+                cartao = new CartaoCredito();
+
+                cartao.setIdCartao(resultSet.getInt("idCartao"));
+                cartao.setNumero(resultSet.getString("numero"));
+
+                entidades.add(cartao);
+
+            }
+            FabricaConexao.fecharConexao();
+            return entidades;
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao inserir na lista", ex);
+
+        }
+    }
+
+    public List<SuperClasse> cartaoBuscarGastosCartoesPeloId(CartaoCredito cartao, Gastos gastos, SuperClasse superClasse, Usuarios usuarios) throws ErroSistema {
+        try {
+
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT  gastoscartao.idGastosCartao, gastoscartao.gasto, gastoscartao.idCartao, gastoscartao.dataGastoCartao, gastoscartao.valor, gastoscartao.categoria FROM gastoscartao JOIN cartao ON gastoscartao.idCartao = cartao.idCartao WHERE YEAR(gastoscartao.dataGastoCartao) LIKE ? AND MONTH(gastoscartao.dataGastoCartao)  LIKE ? AND cartao.idCartao LIKE ? ");
+            ps.setInt(1, ControleDeMesSelecionado.intAno);
+            ps.setInt(2, ControleDeMesSelecionado.intMes);
+            ps.setInt(3, cartao.getIdCartao());
+            ResultSet resultSet = ps.executeQuery();
+
+            List<SuperClasse> entidades = new ArrayList<>();
+            while (resultSet.next()) {
+                superClasse = new SuperClasse();
+
+                superClasse.setIdGastoaCartao(resultSet.getInt("idGastosCartao"));
+                superClasse.setDescricaoGasto(resultSet.getString("gasto"));
+                superClasse.setIdCartao(resultSet.getInt("idCartao"));
+                superClasse.setDataDoGasto(resultSet.getDate("dataGastoCartao"));
+                superClasse.setValor(resultSet.getDouble("valor"));
+                superClasse.setCategoria(resultSet.getString("categoria"));
+
+                entidades.add(superClasse);
+
+            }
+            FabricaConexao.fecharConexao();
+            return entidades;
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao inserir na lista", ex);
+
+        }
+    }
+
+    public List<SuperClasse> cartaoBuscarGastosCartoes(CartaoCredito cartao, Gastos gastos, SuperClasse superClasse, Usuarios usuarios) throws ErroSistema {
+        try {
+            int totalCartao;
+            int idCartao;
+
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT cartao.nome, cartao.bandeira, cartao.fechamento, cartao.vencimento, cartao.numero,cartao.idCartao, gastoscartao.idGastosCartao, gastoscartao.gasto, gastoscartao.idCartao, gastoscartao.dataGastoCartao, gastoscartao.valor, gastoscartao.categoria FROM gastoscartao JOIN cartao ON gastoscartao.idCartao = cartao.idCartao WHERE YEAR(gastoscartao.dataGastoCartao) LIKE ? AND MONTH(gastoscartao.dataGastoCartao)  LIKE ?  ");
+            ps.setInt(1, ControleDeMesSelecionado.intAno);
+            ps.setInt(2, ControleDeMesSelecionado.intMes);
             ResultSet resultSet = ps.executeQuery();
 
             List<SuperClasse> entidades = new ArrayList<>();
@@ -176,19 +236,55 @@ public class CartaoCreditoDao {
 
                 superClasse.setNomeUsuarioDoCartao(resultSet.getString("nome"));
                 superClasse.setBandeira(resultSet.getString("bandeira"));
+                superClasse.setFechamentoFatura(resultSet.getInt("fechamento"));
+                superClasse.setVencimentoFatura(resultSet.getInt("vencimento"));
                 superClasse.setNumero(resultSet.getString("numero"));
                 superClasse.setIdGastoaCartao(resultSet.getInt("idGastosCartao"));
                 superClasse.setDescricaoGasto(resultSet.getString("gasto"));
                 superClasse.setIdCartao(resultSet.getInt("idCartao"));
                 superClasse.setDataDoGasto(resultSet.getDate("dataGastoCartao"));
-                superClasse.setValor(resultSet.getInt("valor"));
+                superClasse.setValor(resultSet.getDouble("valor"));
                 superClasse.setCategoria(resultSet.getString("categoria"));
-
+//                if (superClasse.getIdCartao() == 18) {
+//                    superClasse.setTotal(cartaoBuscarTotalCartao(18));
+//                } else if (superClasse.getIdCartao() == 21) {
+//                    superClasse.setTotal(cartaoBuscarTotalCartao(21));
+//                }
+                totalCartao = cartaoBuscarTotalCartao(superClasse.getIdCartao());
+                superClasse.setTotal(totalCartao);
                 entidades.add(superClasse);
 
             }
+
             FabricaConexao.fecharConexao();
             return entidades;
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao inserir na lista", ex);
+
+        }
+    }
+
+    public int cartaoBuscarTotalCartao(int idCartao) throws ErroSistema {
+
+        int total = 0;
+        try {
+
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT SUM(valor) AS total FROM gastoscartao WHERE YEAR(gastoscartao.dataGastoCartao) LIKE ? AND MONTH(gastoscartao.dataGastoCartao)  LIKE ? AND gastoscartao.idCartao LIKE ? ");
+            ps.setInt(1, ControleDeMesSelecionado.intAno);
+            ps.setInt(2, ControleDeMesSelecionado.intMes);
+            ps.setInt(3, idCartao);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getString("total") == null) {
+                    total = 0;
+                } else {
+                    total = Integer.parseInt(resultSet.getString("total"));
+                }
+            }
+
+            return total;
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao inserir na lista", ex);
 
@@ -224,6 +320,16 @@ public class CartaoCreditoDao {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps = conexao.prepareStatement("delete from cartao where idCartao = ?");
             ps.setInt(1, entidade.getIdCartao());
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new ErroSistema("Existem Compras Registradas Com Este Cartao!", ex);
+        }
+    }
+    public void cartaoDeletarGastoCartao(SuperClasse superClasse) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("delete from gastoscartao where idGastosCartao = ?");
+            ps.setInt(1, superClasse.getIdGastoaCartao());
             ps.execute();
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao deletar", ex);

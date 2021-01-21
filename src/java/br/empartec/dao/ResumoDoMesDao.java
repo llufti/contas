@@ -22,6 +22,28 @@ import java.util.Calendar;
  */
 public class ResumoDoMesDao {
 
+    public void resumoBuscarTotalDeGastosCartao(ResumoDoMes resumoDoMes, int mes, int ano) throws ErroSistema {
+
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT SUM(valor) AS total FROM gastoscartao WHERE MONTH(gastoscartao.dataGastoCartao) LIKE ? AND YEAR(gastoscartao.dataGastoCartao) LIKE ?");
+            ps.setInt(1, mes);
+            ps.setInt(2, ano);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getString("total") == null) {
+                    resumoDoMes.setDespesasCartaoCredito(0);
+                } else {
+                    resumoDoMes.setDespesasCartaoCredito(Integer.parseInt(resultSet.getString("total")));
+                }
+            }
+            FabricaConexao.fecharConexao();
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao inserir na lista", ex);
+        }
+    }
+   
     public void resumoBuscarTotalDeGastos(ResumoDoMes resumoDoMes, int mes, int ano) throws ErroSistema {
 
         try {
@@ -70,7 +92,9 @@ public class ResumoDoMesDao {
     public void resumoBuscarSaldo(ResumoDoMes entidade) throws ErroSistema {
         int receitas = entidade.getReceitas();
         int despesas = entidade.getDespesas();
-        int saldo = receitas - despesas;
+        int despesasCartao = entidade.getDespesasCartaoCredito();
+        entidade.setTotalDespesas(despesas + despesasCartao);
+        int saldo = receitas - entidade.getTotalDespesas();
         entidade.setSaldo(saldo);
         if (saldo < 0) {
             entidade.setCorDoSaldo("red");

@@ -16,6 +16,8 @@ public class ResumoDoMes {
     private Integer receitas;
     private String relatorioDescricaoTelaAtual;
     private Integer despesas;
+    private Integer totalDespesas;
+    private Integer despesasCartaoCredito;
     private Integer saldo;
     private Date dataAtual = new Date();
     private String corDoSaldo;
@@ -94,6 +96,25 @@ public class ResumoDoMes {
 
     public void setStrMesSelecionado(String strMesSelecionado) {
         this.strMesSelecionado = strMesSelecionado;
-    }         
+    }  
+
+    public Integer getDespesasCartaoCredito() {
+        return despesasCartaoCredito;
+    }
+
+    public void setDespesasCartaoCredito(Integer despesasCartaoCredito) {
+        this.despesasCartaoCredito = despesasCartaoCredito;
+    }
+
+    public Integer getTotalDespesas() {
+        return totalDespesas;
+    }
+
+    public void setTotalDespesas(Integer totalDespesas) {
+        this.totalDespesas = totalDespesas;
+    }
+    
+    
+    
     
 }

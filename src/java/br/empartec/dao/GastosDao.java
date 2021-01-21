@@ -93,7 +93,7 @@ public class GastosDao {
     }
 
     public List<Gastos> gastosBuscarTodosGastos(Gastos entidade, Usuarios usuarios) throws ErroSistema {
-
+        int totalGastos;
         try {
 
             Connection conexao = FabricaConexao.getConexao();
@@ -111,6 +111,9 @@ public class GastosDao {
                 entidade.setDescGasto(resultSet.getString("descGasto"));
                 entidade.setValor(resultSet.getDouble("valor"));
                 entidade.setData(resultSet.getDate("data"));
+                
+                totalGastos = gastosBuscarTotalGastos();
+                entidade.setTotalGastos(totalGastos);
                 entidades.add(entidade);
             }
             FabricaConexao.fecharConexao();
@@ -132,6 +135,32 @@ public class GastosDao {
             throw new ErroSistema("Erro ao deletar", ex);
         }
 
+    }
+    public int gastosBuscarTotalGastos() throws ErroSistema {
+
+        int total = 0;
+        try {
+
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT SUM(valor) AS total FROM gastos WHERE YEAR(gastos.data) LIKE ? AND MONTH(gastos.data)  LIKE ? AND gastos.idCliente LIKE ? ");
+            ps.setInt(1, ControleDeMesSelecionado.intAno);
+            ps.setInt(2, ControleDeMesSelecionado.intMes);
+            ps.setInt(3, 1);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getString("total") == null) {
+                    total = 0;
+                } else {
+                    total = Integer.parseInt(resultSet.getString("total"));
+                }
+            }
+
+            return total;
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao inserir na lista", ex);
+
+        }
     }
 
 }//Final da classe

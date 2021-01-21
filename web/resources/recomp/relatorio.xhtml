@@ -46,8 +46,8 @@
                 </p:dataTable>
 
 
-                <p:dataTable id="gastos" scrollable="true"  scrollHeight="300" value="#{controleDeContasBean.listaDeGastos}" var="gastos"
-                             style="font-size: 80%;font-family: 'Hind',sans-serif;margin-top: 3%"
+                <p:dataTable id="gastos" scrollable="true"  scrollHeight="250" value="#{controleDeContasBean.listaDeGastos}" var="gastos"
+                             style="font-size: 80%;font-family: 'Hind',sans-serif;margin-top: 3%" sortBy="#{gastos.idCliente}"
                              rendered="#{controleDeContasBean.renderizacao.dataTableDeGastos == true }" >
 
 
@@ -57,10 +57,20 @@
                     <p:column headerText="VALOR(R$)" style="width: 30%;text-align: center!important"   >
 
                         <h:outputText value="#{gastos.valor}"  >
-                            <f:convertNumber  locale="pt_BR" type="number" pattern=".00"  />
+                            <f:convertNumber type="currency"  />
                         </h:outputText>
 
-                    </p:column>                        
+                    </p:column>    
+                    <p:summaryRow   >
+                        <p:column colspan="1" style="text-align:right; font-weight: bold">
+                            <h:outputText value="Total:" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{gastos.totalGastos}">
+                                <f:convertNumber type="currency"  />
+                            </h:outputText>
+                        </p:column>
+                    </p:summaryRow>                    
                     <p:column style="width: 2%" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true || controleDeContasBean.renderizacao.colunaDeletar == true }"  >
                         <p:commandButton icon="pi pi-pencil" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true}" action="#{controleDeContasBean.gastosEditarGastos(gastos)}" update="@form"  />                     
 

@@ -5,12 +5,24 @@ public class Renderizacao {
     int controle = 1;
     int controle2 = 1;
 
-    private String estadoTela = "despesasCategorias";
+    private String estadoTela = "mercadoSuper";
     private String gastoRepete = " ";
     private String receitaRepete = " ";
     private String btnVisualizarResumo = "exibir";
     private String lblTituloDescricao = "exibir";
+    
+    
+      public boolean isSuperMercado() {
+        return "mercadoSuper".equals(estadoTela);
+    }
 
+    public void exibirSupermercado() {
+        estadoTela = "mercadoSuper";
+    }
+
+    public void ocultarSupermercado() {
+        estadoTela = "";
+    }
     public boolean isResumoDoMes() {
         return "exibir".equals(btnVisualizarResumo);
     }
@@ -26,6 +38,7 @@ public class Renderizacao {
     public boolean isInserirDespesas() {
         return "despesasInserir".equals(estadoTela);
     }
+
     public boolean isInserirDespesasCartao() {
         return "cartaoInserirGastos".equals(estadoTela);
     }
@@ -69,8 +82,12 @@ public class Renderizacao {
     public void exibirInserirDespesas() {
         estadoTela = "despesasInserir";
     }
+
     public void exibirInserirDespesasCartao() {
         estadoTela = "cartaoInserirGastos";
+    }
+    public void ocultarInserirDespesasCartao() {
+        estadoTela = " ";
     }
 
     public void exibirInserirReceitas() {
@@ -153,9 +170,6 @@ public class Renderizacao {
         return "colunaDeleta".equals(colunaEditaDeleta);
     }
 
-    public boolean isDataTableDeGastos() {
-        return "dataTableGastos".equals(relatorio);
-    }
 
     public boolean isDataTableTotalCategorias() {
         return "totalCategoriasDataTable".equals(relatorio);
@@ -168,9 +182,15 @@ public class Renderizacao {
     public void ocultarDataTableColunaDelEdit() {
         colunaEditaDeleta = "";
     }
+    public boolean isDataTableDeGastos() {
+        return "dataTableGastos".equals(relatorio);
+    }
 
     public void exibirDataTableDeGastos() {
         relatorio = "dataTableGastos";
+    }
+      public void ocultarDataTableDeGastos() {
+        relatorio = " ";
     }
 
     public void exibirDataTableDeReceitas() {
@@ -187,6 +207,17 @@ public class Renderizacao {
 
     public void exibirColunaDeleta() {
         colunaEditaDeleta = "colunaDeleta";
+    }
+    public boolean isCartaoTodasAsDespesas() {
+        return "despesasTodasCartao".equals(relatorio);
+    }
+
+    public void exibirTodasDespesasDoCartao() {
+        relatorio = "despesasTodasCartao";
+    }
+
+    public void ocultarTodasDespesasDoCartao() {
+        relatorio = "";
     }
 
     private String colunaCartaoInfo = "vencimentoFechamento";
@@ -245,10 +276,4 @@ public class Renderizacao {
     public void ocultarSelecionarProximoMes() {
         proximoMes = "ocultar";
     }
-
-  
-
-   
-  
-
 }

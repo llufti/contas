@@ -40,6 +40,16 @@
         font-weight: bold!important;
         
     }
+    .lblTituloFavoritos{
+        font-size: 110%!important;
+        color: #1849d2;
+        font-weight: bold!important;
+        margin-left: 8%!important;
+        
+    }.btnFavoritos{
+        font-size: 85%!important;
+        margin-left: 7%!important;
+    }
     #idDivTituloComMenuRelatorios{
         height: 33px;
         margin-top: -2%!important;

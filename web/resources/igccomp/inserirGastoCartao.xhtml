@@ -15,6 +15,16 @@
         <p:panel id="idPanelGastosCartao" style="background-color: white!important;border: none" rendered="#{controleDeContasBean.renderizacao.inserirDespesasCartao == true}">
 
             <p:defaultCommand target="btnGastosCartao" scope="idPanelGastosCartao"  />
+            <div align="left" >     
+                <h:panelGrid columns="2" cellspacing="10" >
+                    <p:outputLabel class="lblDescCartao" value="NOME:"  />
+                    <p:outputLabel   value="#{controleDeContasBean.cartaoCredito.nome}"  />
+                    <p:outputLabel class="lblDescCartao" value="BANDEIRA:"  />
+                    <p:outputLabel   value="#{controleDeContasBean.cartaoCredito.bandeira}"  />
+                    <p:outputLabel class="lblDescCartao" value="NUMERO:"  />
+                    <p:outputLabel value="#{controleDeContasBean.cartaoCredito.numero}"  />
+                </h:panelGrid>
+            </div>
             <h:panelGrid id="idGridGastosCartao" class="gridInserirGastos" cellspacing="15" >
 
                 <h:panelGrid columns="2" class="gridGasto"   >
@@ -47,7 +57,7 @@
                 </h:panelGrid>
             </h:panelGrid> 
             <h:panelGrid columns="2" cellspacing="15" >
-                <p:commandButton class="btnSalvarCancelarGastoCartao"  action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  value="VOLTAR" />
+                <p:commandButton class="btnSalvarCancelarGastoCartao"  action="#{controleDeContasBean.cartaoExibirTelaSelecionarCartao()}" update="@form"  value="VOLTAR" />
                 <p:commandButton class="btnSalvarCancelarGastoCartao" id="btnGastosCartao"   action="#{controleDeContasBean.cartaoSalvarGastosComCartao()}" update="@form"  value="SALVAR" /> 
             </h:panelGrid>
 

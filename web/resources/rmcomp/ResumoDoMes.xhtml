@@ -17,12 +17,12 @@
 
         <p:sidebar  widgetVar="sidebar1" baseZIndex="10000"   >
             <p:menu style="width: 100%">
-                <p:submenu label="Despesas">
-                    <p:menuitem value="Adicionar Despesas" action="#{controleDeContasBean.exibirTelaCategoriasGasto()}"   icon="pi pi-save" update="@form"/>
+                <p:submenu  label="Despesas">
+                    <p:menuitem value="Adicionar Despesas" action="#{controleDeContasBean.exibirTelaCategoriasGasto()}"   icon="fa fa-money" update="@form"/>
                     <p:menuitem value="Visualizar Despesas" action="#{controleDeContasBean.exibirTelaRelatorios()}"  icon="pi pi-search" update="@form" />
                 </p:submenu>
                 <p:submenu label="Receitas">
-                    <p:menuitem value="Adicionar Receitas" action="#{controleDeContasBean.exibirTelaInserirReceitas()}"  icon="pi pi-plus" update="@form" />
+                    <p:menuitem value="Adicionar Receitas" action="#{controleDeContasBean.exibirTelaInserirReceitas()}"   icon="fa fa-money" update="@form" />
                     <p:menuitem value="Visualizar Receitas" action="#{controleDeContasBean.exibirTabelaReceitas()}"   icon="pi pi-search" update="@form" />
                 </p:submenu>
                 <p:submenu label="Serviços">
@@ -34,7 +34,7 @@
             </p:menu>
             <p:commandButton class="btnVoltarSlideBar" value="Cancel" oncomplete="PF('sidebar1').hide()"/>
         </p:sidebar>
-        <p:panel style="border-color: #003333">
+        <p:panel style="border-color: #003333;">
             <h:panelGrid columns="3" style="text-align: center" width="100%">
                 <p:commandButton type="button" style="font-size: 80%!important;"  icon="pi pi-list" 
                                  onclick="PF('sidebar1').show()" />
@@ -71,7 +71,7 @@
                 <h:outputText id="idDadosResumoDoMesReceitas" class="lblDadosResumoDoMesReceitas" value="#{controleDeContasBean.resumoDoMes.receitas}" >
                     <f:convertNumber locale="pt_BR" type="currency" currencySymbol="R$"   />
                 </h:outputText>              
-                <h:outputText id="idDadosResumoDoMesDespesas" class="lblDadosResumoDoMesDespesas"  value="#{controleDeContasBean.resumoDoMes.despesas}" >
+                <h:outputText id="idDadosResumoDoMesDespesas" class="lblDadosResumoDoMesDespesas"  value="#{controleDeContasBean.resumoDoMes.totalDespesas}" >
                     <f:convertNumber locale="pt_BR" type="currency" currencySymbol="R$" />
                 </h:outputText>
                 <h:outputText  id="idDadosResumoDoMesSaldo" class="lblDadosResumoDoMesSaldo" value="#{controleDeContasBean.resumoDoMes.saldo}" style="color:#{controleDeContasBean.resumoDoMes.corDoSaldo}" >
@@ -80,7 +80,29 @@
 
             </h:panelGrid>
         </p:panel>
-        <p:panel>
+        <h:panelGrid columns="7" style="text-align: center!important;" width="100%" >
+                    <p:commandLink action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  >
+                        <p:graphicImage library="images" name="despesas.jpg" width="45" height="40" />
+                    </p:commandLink>
+                    <p:commandLink action="#{controleDeContasBean.exibirTelaInserirReceitas()}" update="@form"  >
+                        <p:graphicImage library="images" name="receita.png" width="35" height="30" />
+                    </p:commandLink>
+                    <p:commandLink action="#{controleDeContasBean.exibirTelaRelatorios()}" update="@form"  >
+                        <p:graphicImage library="images" name="exibirDespesas.png" width="35" height="30" />
+                    </p:commandLink>
+                    <p:commandLink action="#{controleDeContasBean.exibirTabelaReceitas()}" update="@form" >
+                        <p:graphicImage library="images" name="exibirReceitas.jpg" width="60" height="60" />
+                    </p:commandLink>
+                    <p:commandLink action="#{controleDeContasBean.cartaoBuscarGastosCartoes()}" update="@form" >
+                        <p:graphicImage library="images" name="despesasCartao.png" width="45" height="35" />
+                    </p:commandLink>
+                    <p:commandLink action="#{controleDeContasBean.cartaoExibirTelaSelecionarCartao()}" update="@form" >
+                        <p:graphicImage library="images" name="cartaoCredito.jpg" width="40" height="50" />
+                    </p:commandLink>
+                   
+
+                </h:panelGrid>
+        <p:panel rendered="false">
             
             <h:panelGrid columns="1" rendered="#{controleDeContasBean.renderizacaoSubTelas.tituloSemMenu}"  >
                 <p:outputLabel value="#{controleDeContasBean.tituloDescricao.tituloDescricao}" class="lblTituloDescricao" />
@@ -130,8 +152,8 @@
             <p:menu overlay="true" trigger="menuGastos" my="left top" at="left bottom" style="font-size: 90%" >
 
                 <p:submenu label="Exibir" >
-                    <p:menuitem value="Debitos"  update="@form" icon="pi pi-pencil" action="#{controleDeContasBean.renderizacao.exibirColunaEdita()}" />
-                    <p:menuitem value="Cartão de Crédito" update="@form" icon="pi pi-times" action="#{controleDeContasBean.cartaoBuscarGastosCartoes()}" />
+                    <p:menuitem value="Despesas"  update="@form" icon="fa fa-money" action="#{controleDeContasBean.exibirTelaRelatorios()}" />
+                    <p:menuitem value="Cartão de Crédito" update="@form" icon="fa fa-fw fa-credit-card" action="#{controleDeContasBean.cartaoBuscarGastosCartoes()}" />
                 </p:submenu>
                 
                 <p:submenu label="Editar/Deletar" >

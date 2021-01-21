@@ -21,8 +21,20 @@
 
 @media 
 (min-width: 360px){
+    .fa-credit-card{
+        width: 20%!important;
+        margin-left: -3%;
+    }
+    .fa-money{
+        width: 20%!important;
+    }
+    .pi-search{
+        width: 20%!important;
+    }
 
-
+    .lblDescCartao{
+        font-weight: bold!important;
+    }
     .top-bar{
         width: 100%;
         height: 30px;

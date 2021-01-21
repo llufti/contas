@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dataTable id="idDataTodosGastosCartao" scrollable="true"   scrollHeight="250" value="#{controleDeContasBean.listaDeGastosCartao}" var="superClasse"
+                     style="font-size: 80%;font-family: 'Hind',sans-serif;margin-top: 3%" expandableRowGroups="true" sortBy="#{superClasse.idCartao}"
+                     rendered="#{controleDeContasBean.renderizacao.cartaoTodasAsDespesas == true }" >                    
+            <p:headerRow>
+                <p:column colspan="3">
+                    <h:outputText value="#{superClasse.nomeUsuarioDoCartao}" />
+                </p:column>
+            </p:headerRow>
+
+            <p:column headerText="DATA" width="10%"   >
+
+                <h:outputText value="#{superClasse.dataDoGasto}"  >
+                    <f:convertDateTime  locale="pt_BR"  pattern="dd/MM"  />
+                </h:outputText>
+
+            </p:column>   
+           
+            <p:column headerText="GASTOS" width="60%"  >
+                <h:outputText value="#{superClasse.descricaoGasto}" />                            
+            </p:column>
+            <p:column headerText="(R$)" width="25%"  >
+
+                <h:outputText value="#{superClasse.valor}"   >
+                    <f:convertNumber  type="currency"  />
+                </h:outputText>
+
+            </p:column>      
+            <p:summaryRow   >
+                <p:column colspan="2" style="text-align:right; font-weight: bold">
+                    <h:outputText value="Total:" />
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{superClasse.total}">
+                        <f:convertNumber type="currency"  />
+                    </h:outputText>
+                </p:column>
+            </p:summaryRow>
+
+            <p:column style="width: 1%!important;text-align: center!important" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true || controleDeContasBean.renderizacao.colunaDeletar == true }"  >
+                <p:commandButton icon="pi pi-pencil" rendered="#{controleDeContasBean.renderizacao.colunaEditar == true}" action="#{controleDeContasBean.cartaoEditarGastoCartao(superClasse)}" update="@form"  />                     
+
+                <p:commandButton icon="pi pi-times" rendered="#{controleDeContasBean.renderizacao.colunaDeletar == true}" action="#{controleDeContasBean.cartaoDeletarGastoCartao(superClasse)}" update="@form"   />                     
+            </p:column>
+
+
+        </p:dataTable>
+    </cc:implementation>
+</html>

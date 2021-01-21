@@ -37,7 +37,7 @@ public class ReceitasDao {
 
             for (i = 0; i < mes; i++) {
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(receitas.getReceitasData());
+                cal.setTime(ControleDeMesSelecionado.dateMesAnoSelecionado);
                 cal.add(Calendar.MONTH, i);
                 if (receitas.getReceitasId() == null) {
                     ps = conexao.prepareCall("INSERT INTO `receitas` (`descReceita`,`valor`,`dataReceita`, `idCliente`) VALUES (?,?,?,?)");

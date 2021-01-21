@@ -16,12 +16,15 @@ public class SuperClasse {
     private Integer idGastoaCartao;
     private Integer idCartao;
     private Integer idUsuario;
+    private Integer fechamentoFatura;
+    private Integer vencimentoFatura;
     private String nomeUsuarioDoCartao;
     private String bandeira;
     private String numero;
     private String descricaoGasto;
     private String categoria;
-    private int valor;
+    private Double valor;
+    private int total;
     private Date dataDoGasto = new Date();
 
     public Integer getIdGastoaCartao() {
@@ -68,6 +71,14 @@ public class SuperClasse {
         return numero;
     }
 
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
@@ -88,14 +99,6 @@ public class SuperClasse {
         this.categoria = categoria;
     }
 
-    public int getValor() {
-        return valor;
-    }
-
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-
     public Date getDataDoGasto() {
         return dataDoGasto;
     }
@@ -103,8 +106,31 @@ public class SuperClasse {
     public void setDataDoGasto(Date dataDoGasto) {
         this.dataDoGasto = dataDoGasto;
     }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Integer getFechamentoFatura() {
+        return fechamentoFatura;
+    }
+
+    public void setFechamentoFatura(Integer fechamentoFatura) {
+        this.fechamentoFatura = fechamentoFatura;
+    }
+
+    public Integer getVencimentoFatura() {
+        return vencimentoFatura;
+    }
+
+    public void setVencimentoFatura(Integer vencimentoFatura) {
+        this.vencimentoFatura = vencimentoFatura;
+    }
     
     
-    
-    
+
 }

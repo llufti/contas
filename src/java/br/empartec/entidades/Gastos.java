@@ -12,6 +12,7 @@ public class Gastos implements Serializable {
     private Integer id;
     private Integer idCliente = 1;
     private Integer somaCategoria;
+    private Integer totalGastos;
     private String categoria;
     private String descGasto;
     private Integer gastosRepete = 1;
@@ -101,6 +102,15 @@ public class Gastos implements Serializable {
         this.idCliente = idCliente;
     }
 
+    public Integer getTotalGastos() {
+        return totalGastos;
+    }
+
+    public void setTotalGastos(Integer totalGastos) {
+        this.totalGastos = totalGastos;
+    }
+
+    
   
     
 }

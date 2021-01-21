@@ -45,7 +45,6 @@ public class ChartView implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println("mes da função" + definirMesCalculoBarraGrafico(-2));
         try {
             createBarModels();
         } catch (ErroSistema ex) {
@@ -85,12 +84,11 @@ public class ChartView implements Serializable {
 
         ChartSeries girls = new ChartSeries();
         girls.setLabel("Gastos");
-
-        girls.set(definirMesAnoBarrasDoGrafico(-2), GraficoGastosDao.somarGastosDosMeses(definirMesCalculoBarraGrafico(-2), definirAnoCalculoBarraGrafico(-2)));
-        girls.set(definirMesAnoBarrasDoGrafico(-1), GraficoGastosDao.somarGastosDosMeses(definirMesCalculoBarraGrafico(-1), definirAnoCalculoBarraGrafico(-1)));
-        girls.set("Mes Atual", GraficoGastosDao.somarGastosDosMeses(definirMesCalculoBarraGrafico(0), definirAnoCalculoBarraGrafico(0)));
-        girls.set(definirMesAnoBarrasDoGrafico(1), GraficoGastosDao.somarGastosDosMeses(definirMesCalculoBarraGrafico(1), definirAnoCalculoBarraGrafico(1)));
-        girls.set(definirMesAnoBarrasDoGrafico(2), GraficoGastosDao.somarGastosDosMeses(definirMesCalculoBarraGrafico(2), definirAnoCalculoBarraGrafico(2)));
+        girls.set(definirMesAnoBarrasDoGrafico(-2), GraficoGastosDao.somarGastosParaGrafico(definirMesCalculoBarraGrafico(-2), definirAnoCalculoBarraGrafico(-2)));
+        girls.set(definirMesAnoBarrasDoGrafico(-1), GraficoGastosDao.somarGastosParaGrafico(definirMesCalculoBarraGrafico(-1), definirAnoCalculoBarraGrafico(-1)));
+        girls.set("Mes Atual", GraficoGastosDao.somarGastosParaGrafico(definirMesCalculoBarraGrafico(0), definirAnoCalculoBarraGrafico(0)));
+        girls.set(definirMesAnoBarrasDoGrafico(1), GraficoGastosDao.somarGastosParaGrafico(definirMesCalculoBarraGrafico(1), definirAnoCalculoBarraGrafico(1)));
+        girls.set(definirMesAnoBarrasDoGrafico(2), GraficoGastosDao.somarGastosParaGrafico(definirMesCalculoBarraGrafico(2), definirAnoCalculoBarraGrafico(2)));
         model.addSeries(boys);
         model.addSeries(girls);
 
@@ -144,6 +142,7 @@ public class ChartView implements Serializable {
         strMes = format.format(cal.getTime().getTime());
         strMes = strMes.substring(0, 2);
         mesParaBarraDoGrafico = Integer.parseInt(strMes);
+        System.out.println("Ano " + mesParaBarraDoGrafico);
         
         return  mesParaBarraDoGrafico;
     }

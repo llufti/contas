@@ -23,6 +23,7 @@ import br.empartec.util.ErroSistema;
 import br.empartec.visualizacao.Renderizacao;
 import br.empartec.visualizacao.RenderizacaoSubTelas;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,15 +55,18 @@ public class ControleDeContasBean implements Serializable {
     private ResumoDoMesDao resumoDoMesDao;
     private RenderizacaoSubTelas renderizacaoSubTelas;
     private SuperClasse superClasse;
-    
+
     private List<Receitas> listaReceitas;
     private List<CartaoCredito> listaCartaoCredito;
     private List<CartaoCredito> listaCartoesCadastrados;
     private List<SuperClasse> listaDeGastosCartao;
     private List<Gastos> listaDeGastos;
 
+    int contador;
+
     @PostConstruct
     public void init() {
+
         System.out.println("Entrou no bean");
         cartaoCredito = new CartaoCredito();
         gastos = new Gastos();
@@ -82,7 +86,6 @@ public class ControleDeContasBean implements Serializable {
         tituloDescricao.setTituloDescricao("CATEGORIAS");
 
         try {
-            exibirTelaCategoriasGasto();
             calculoDoResumoDoMes();
         } catch (ErroSistema ex) {
             Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,6 +96,7 @@ public class ControleDeContasBean implements Serializable {
     //------------------------resumo do mes-----------------
     public void calculoDoResumoDoMes() throws ErroSistema {
         resumoDoMesDao.resumoBuscarTotalDeGastos(resumoDoMes, ControleDeMesSelecionado.intMes, ControleDeMesSelecionado.intAno);
+        resumoDoMesDao.resumoBuscarTotalDeGastosCartao(resumoDoMes, ControleDeMesSelecionado.intMes, ControleDeMesSelecionado.intAno);
         resumoDoMesDao.resumoBuscarTotalDeReceitasDoProximoMes(resumoDoMes, ControleDeMesSelecionado.intMes, ControleDeMesSelecionado.intAno);
         resumoDoMesDao.resumoBuscarSaldo(resumoDoMes);
     }
@@ -105,6 +109,8 @@ public class ControleDeContasBean implements Serializable {
             gastoBuscarTodosGastos();
         } else if (renderizacao.isDataTableDeReceitas()) {
             receitasBuscarReceitas();
+        } else if (renderizacao.isCartaoTodasAsDespesas()) {
+            cartaoBuscarGastosCartoes();
         }
     }
 
@@ -115,6 +121,8 @@ public class ControleDeContasBean implements Serializable {
             gastoBuscarTodosGastos();
         } else if (renderizacao.isDataTableDeReceitas()) {
             receitasBuscarReceitas();
+        } else if (renderizacao.isCartaoTodasAsDespesas()) {
+            cartaoBuscarGastosCartoes();
         }
     }
 
@@ -124,7 +132,13 @@ public class ControleDeContasBean implements Serializable {
         renderizacao.ocultarDataTableColunaDelEdit();
         renderizacao.ocultaTxtGastoRepete();
         renderizacaoSubTelas.tituloSemMenuExibir();
+        renderizacao.ocultarTodasDespesasDoCartao();
 
+    }
+    public void exibirTelaSupermercado() throws ErroSistema {
+        renderizacaoSubTelas.tituloSemMenuOcultar();
+        renderizacao.exibirSupermercado();
+         
     }
 
     public void exibirTelaInserirReceitas() throws ErroSistema {
@@ -132,7 +146,7 @@ public class ControleDeContasBean implements Serializable {
         gastos = new Gastos();
         receitas = new Receitas();
         renderizacao.exibirInserirReceitas();
-
+        renderizacao.ocultarTodasDespesasDoCartao();
         renderizacao.ocultarDataTableColunaDelEdit();
         renderizacao.ocultaTxtGastoRepete();
     }
@@ -209,10 +223,40 @@ public class ControleDeContasBean implements Serializable {
         renderizacao.exibirTelaInserirCartao();
     }
 
+    public void cartaoEditarGastoCartao(SuperClasse superClasse) {
+
+        this.superClasse = superClasse;
+        gastos.setDescGasto(superClasse.getDescricaoGasto());
+        gastos.setValor(superClasse.getValor());
+        gastos.setId(superClasse.getIdGastoaCartao());
+        cartaoCredito.setFechamentoFatura(superClasse.getFechamentoFatura());
+        cartaoCredito.setVencimentoFatura(superClasse.getVencimentoFatura());
+        cartaoCredito.setIdCartao(superClasse.getIdCartao());
+        cartaoCredito.setNome(superClasse.getNomeUsuarioDoCartao());
+        cartaoCredito.setBandeira(superClasse.getBandeira());
+        cartaoCredito.setNumero(superClasse.getNumero());
+        renderizacao.exibirInserirDespesasCartao();
+        renderizacao.ocultarTodasDespesasDoCartao();
+    }
+
     public void cartaoDeletarCartao(CartaoCredito cartaoCredito) throws ErroSistema {
         try {
             cartaoCreditoDao.cartaoDeletarCartao(cartaoCredito);
             listaCartaoCredito.remove(cartaoCredito);
+
+            adicionarMensagem("Deletado com sucesso!", FacesMessage.SEVERITY_INFO);
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+
+    }
+
+    public void cartaoDeletarGastoCartao(SuperClasse superClasse) throws ErroSistema {
+        try {
+            cartaoCreditoDao.cartaoDeletarGastoCartao(superClasse);
+            calculoDoResumoDoMes();
+            listaDeGastosCartao.remove(superClasse);
             adicionarMensagem("Deletado com sucesso!", FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
             Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,16 +268,20 @@ public class ControleDeContasBean implements Serializable {
     public void cartaoInserirGastosComCartao(CartaoCredito cartaoCredito) throws ErroSistema {
         this.cartaoCredito = cartaoCredito;
         renderizacao.ocultarSelecionarProximoMes();
+        tituloDescricao.setTituloDescricao("CARTÃO");
+        renderizacaoSubTelas.tituloSemMenuExibir();
         renderizacao.exibirInserirDespesasCartao();
     }
 
     public void cartaoSalvarGastosComCartao() throws ErroSistema {
         cartaoCreditoDao.cartaoSalvarGastosComCartao(cartaoCredito, usuarios, gastos);
+        calculoDoResumoDoMes();
         gastos = new Gastos();
         adicionarMensagem("Salvo com sucesso!", FacesMessage.SEVERITY_INFO);
     }
 
     public void cartaoAdicionarCartao() {
+        cartaoCredito = new CartaoCredito();
         cartaoCreditoDao = new CartaoCreditoDao();
         tituloDescricao.setTituloDescricao("ADICIONAR");
         renderizacao.exibirTelaInserirCartao();
@@ -242,8 +290,10 @@ public class ControleDeContasBean implements Serializable {
 
     public void cartaoExibirTelaSelecionarCartao() throws ErroSistema {
         cartaoBuscarCartoes();
-        tituloDescricao.setTituloDescricao("CARTÕES");
+        tituloDescricao.setTituloDescricao("CARTÃO");
         renderizacao.exibirTelaSelecionarCartao();
+        renderizacao.ocultarTodasDespesasDoCartao();
+
         renderizacaoSubTelas.tituloComMenuCartaoDeCreditoExibir();
 
     }
@@ -272,12 +322,29 @@ public class ControleDeContasBean implements Serializable {
             adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
     }
+
+    public void cartaoBuscarIdNumero() {
+        try {
+            listaCartaoCredito = cartaoCreditoDao.cartaoBuscarIdCartoesPeloUsuario(cartaoCredito);
+            if (listaCartaoCredito == null || listaCartaoCredito.size() < 1) {
+                adicionarMensagem("Nao ha cadastros", FacesMessage.SEVERITY_INFO);
+            }
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
     public void cartaoBuscarGastosCartoes() {
         try {
-            cartaoBuscarCartoesCadastrados();
-            listaDeGastosCartao = cartaoCreditoDao.cartaoBuscarGastosCartoes(cartaoCredito, gastos, superClasse,usuarios);
-            System.out.println("registros encontrados " + listaDeGastosCartao.size());
-                    
+            cartaoBuscarIdNumero();
+            tituloDescricao.setTituloDescricao("CARTÕES");
+
+            listaDeGastosCartao = cartaoCreditoDao.cartaoBuscarGastosCartoes(cartaoCredito, gastos, superClasse, usuarios);
+
+            renderizacao.exibirTodasDespesasDoCartao();
+            renderizacao.ocultarInserirDespesasCartao();
+
             if (listaDeGastosCartao == null || listaDeGastosCartao.size() < 1) {
                 adicionarMensagem("Nao ha cadastros", FacesMessage.SEVERITY_INFO);
             }
@@ -323,7 +390,6 @@ public class ControleDeContasBean implements Serializable {
     }
 
     public void salvarReceita() throws ErroSistema {
-
         try {
             receitasDao.receitasSalvarReceitas(receitas);
             receitas = new Receitas();
@@ -520,7 +586,5 @@ public class ControleDeContasBean implements Serializable {
     public void setListaDeGastosCartao(List<SuperClasse> listaDeGastosCartao) {
         this.listaDeGastosCartao = listaDeGastosCartao;
     }
-    
-    
 
 }

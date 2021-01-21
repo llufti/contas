@@ -40,14 +40,14 @@
         background-color: white!important;
         border: none
     }
-    .ui-fieldset .ui-fieldset-legend{
+/*    .ui-fieldset .ui-fieldset-legend{
         border-color: blue;
         font-size: 90%!important;
         font-family: 'Hind',sans-serif;
         background-color: white;
         border-radius: 10px 10px 10px 10px;
         font-weight: bold;
-    }
+    }*/
 
     .lblGasto{
         font-size: 100%!important;
