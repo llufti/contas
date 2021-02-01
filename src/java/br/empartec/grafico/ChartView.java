@@ -142,7 +142,6 @@ public class ChartView implements Serializable {
         strMes = format.format(cal.getTime().getTime());
         strMes = strMes.substring(0, 2);
         mesParaBarraDoGrafico = Integer.parseInt(strMes);
-        System.out.println("Ano " + mesParaBarraDoGrafico);
         
         return  mesParaBarraDoGrafico;
     }

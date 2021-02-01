@@ -21,9 +21,28 @@
 
 @media 
 (min-width: 360px){
+    .btnDeletarItemLista{
+        font-size: 80%!important;
+    }
+    .txtAdicionarItens{
+        text-align: center;
+        width: 110%!important;
+    }
+    .fa-pencil-alt{
+        width: 20%!important;
+    }
+    .fa-thumbs-up{
+        width: 20%!important;
+    }
+    .fa-vote-yea{
+        width: 20%!important;
+    }
     .fa-credit-card{
         width: 20%!important;
         margin-left: -3%;
+    }
+    .fa-shopping-cart{
+        width: 20%!important;
     }
     .fa-money{
         width: 20%!important;
@@ -31,6 +50,7 @@
     .pi-search{
         width: 20%!important;
     }
+    /*
 
     .lblDescCartao{
         font-weight: bold!important;
@@ -82,24 +102,13 @@
         font-weight: bold!important;
     }
 
-    .ui-datatable-header {
-        background-color: white!important;    
-    }
-
-    .ui-datatable * {
-        border : 0px !important;
-
-    }
+   
     .dadataTableCartoesCadastrados{
 
 
     }
 
-    .btnDataTable{
-        background-color: white!important;
-        border-radius: 10px 10px 10px 10px;
-        border-color: #1849d2!important;
-    }
+    
     .btnMenuCartaoDeCredito{
         background-color: white!important;
         border-radius: 10px 10px 10px 10px;
@@ -190,7 +199,7 @@
         background-color: white!important;
         font-size: 85%!important;
         border-color:#1849d2!important;
-    }
+    }*/
 
 
     .container {

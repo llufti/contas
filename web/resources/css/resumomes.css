@@ -21,9 +21,25 @@
 
 @media 
 (min-width: 360px){ 
-
-
-
+    .pi-dollar{
+        font-size: 140%!important;
+    }
+    .gridDescricaoLista{
+        text-align: left!important;
+    }
+    .lblNomeLista{
+        font-size: 120%!important;
+        font-weight: bold!important;
+    }
+    .lblValorLista{
+        font-size: 120%!important;
+    }
+    .lblDataLista{
+        font-weight: bold!important;
+    }
+    .dataTableItensSupermercado{
+        font-size: 100%!important;
+    }
     .btnSelecionasMes{
         font-size: 100%!important;
         background-color: white!important;

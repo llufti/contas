@@ -27,7 +27,7 @@
         background-color: white; 
         margin-left:-7%!important;
         margin-top: -15%!important;
-    }
+    }/*
 
     .botaoDespesa{ 
         border-color:#1849d2; 
@@ -53,7 +53,7 @@
         font-size: 80%;
         border-radius:  15px  15px 15px 15px;       
     }
-    /*    ui-button-icon-left ui-icon ui-c fa fa-snowflake-o*/
+        ui-button-icon-left ui-icon ui-c fa fa-snowflake-o
     .fa-plus {
         font-size: 100%!important;
         color: #18d254!important; 
@@ -63,7 +63,7 @@
     .pi-bars{
         color: #18d254!important; 
         font-size: 130%!important;
-    }
+    }*/
 
     .container {
         max-width: 360px;

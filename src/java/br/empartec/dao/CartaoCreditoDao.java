@@ -76,10 +76,14 @@ public class CartaoCreditoDao {
             calCartao.setTime(cartao.getData());
 
             if (diaAtual >= fechamento && diaAtual < vencimento || diaAtual > vencimento ) { //se o dia da compra estiver dentro do melhor dia de compra
-                System.out.println("executou o melhor dia de compra ");
                 Calendar calMesAtual = Calendar.getInstance(); // cria uma instancia que pega o mes atual
                 calMesAtual.setTime(cartao.getData()); // pega o mes atual
-                calMesAtual.add(Calendar.MONTH, 1); // gera um data com o mes que vem
+                if(diaAtual > cartao.getVencimentoFatura() ){
+                calMesAtual.add(Calendar.MONTH, 2); // gera um data com o mes que vem                    
+                }else{
+                calMesAtual.add(Calendar.MONTH, 1); // gera um data com o mes que vem                 
+                    
+                }
                 Date proximoMesMelhorDia = new Date(calMesAtual.getTime().getTime()); // adiciona o mes recem criado em uma variavel
                 for (j = 0; j < mesesQueRepetem; j++) {
                     Calendar calMesQueVem = Calendar.getInstance(); //cria mais uma instancia do me que vem 

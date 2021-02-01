@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation >
+        <p:fieldset id="idFieldSupermercado" legend="Lista De Compras" style="text-align: center!important" rendered="#{controleDeContasBean.renderizacao.superMercado}" >
+            <p:defaultCommand target="idBtnSalvarLista" scope="idFieldSupermercado" />
+            <div align="center" >
+                <h:panelGrid columns="2" rendered="#{controleDeContasBean.renderizacao.supermercadoTxtNovaLista == false}" >
+                    <p:commandButton value="Voltar" icon="pi pi-step-backward-alt" action="#{controleDeContasBean.exibirTelaSupermercado()}" update="@form" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}"  />                        
+                    <p:commandButton value="Nova Lista" icon="pi pi-plus" action="#{controleDeContasBean.supermercadoExibirTxtNovaLista()}" update="@form:supermercado:idFieldSupermercado" />                        
+                </h:panelGrid>
+                <h:panelGrid columns="2" rendered="#{controleDeContasBean.renderizacao.supermercadoTxtNovaLista}" >
+                    <p:inputText value="#{controleDeContasBean.supermercado.descricaoLista}" id="idTxtNomeLista" style="text-align: center"  placeholder="Nome da lista" /> 
+                    <p:commandButton id="idBtnSalvarLista" icon="pi pi-save" action="#{controleDeContasBean.supermercadoSalvarLista()}" update="@form"  />
+                </h:panelGrid>
+
+                <p:selectManyCheckbox id="grid" value="#{controleDeContasBean.selectedCities}" layout="grid" columns="2" styleClass="grid-checkbox" rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" >
+                    <f:selectItems value="#{controleDeContasBean.cities}" var="city" itemLabel="#{city}" itemValue="#{city}"  />
+                </p:selectManyCheckbox>
+                <p:commandButton value="Salvar" action="#{controleDeContasBean.salvarItensSupermercado()}" update="@form" rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" />
+            </div>   
+            <p:sidebar  widgetVar="edtarDeletarSelecionar"  position="bottom"   >
+                <p:menu style="width: 100%">
+                    <p:menuitem value="Selecionar Lista" action="#{controleDeContasBean.renderizacao.supermercadoExibirTableBtnSelecionarLista()}" icon="fas fa-thumbs-up" update="@form" />
+                    <p:menuitem value="Editar Lista" action="#{controleDeContasBean.renderizacao.supermercadoExibirTableBtnEditarLista()}"   icon="fas fa-pencil-alt" update="@form"/>
+                    <p:menuitem value="Deletar Lista" action="#{controleDeContasBean.renderizacao.supermercadoExibirTableBtnDeletarLista()}"  icon="fas fa-vote-yea" update="@form" />
+                </p:menu>
+                <p:commandButton class="btnVoltarSlideBar" value="Voltar" oncomplete="PF('edtarDeletarSelecionar').hide()"/>
+            </p:sidebar>
+            <p:dataTable  id="idDataTableListaSupermercado" scrollable="true"  scrollHeight="240" value="#{controleDeContasBean.listSupermercado}" var="supermercado"
+                          style="font-size: 100%;font-family: 'Hind',sans-serif;margin-top: 3%;text-align: left" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableLista}" >
+
+                <f:facet name="header" >
+                    <p:outputLabel value="Listas de compras salvas" style="margin-right: 2%!important" />
+                    <p:commandButton style="font-size: 80%!important;margin-left: 2%!important;" type="button" icon="pi pi-list"  onclick="PF('edtarDeletarSelecionar').show()" />                    
+                </f:facet>
+                <p:column headerText="Data" width="15%" style="text-align: center"  >
+                    <h:outputText value="#{supermercado.dataLista}" > 
+                        <f:convertDateTime  locale="pt_BR"  pattern="dd/MM"  />
+                    </h:outputText>                            
+                </p:column>
+                <p:column headerText="Descrição" width="80%" style="text-align: left"  >
+                    <h:outputText value="#{supermercado.descricaoLista}"  />     
+                </p:column>
+
+                <p:column width="10%" headerText="" >
+                    <p:commandButton  icon="pi pi-times" title="Teste" action="#{controleDeContasBean.supermercadoDeletarLista(supermercado)}" update="@form" rendered="#{controleDeContasBean.renderizacao.superTableExibirBtnDeletarLista}" />
+                    <p:commandButton  icon="pi pi-pencil" title="Teste" action="#{controleDeContasBean.supermercadoEditarNomeLista(supermercado)}" update="@form" rendered="#{controleDeContasBean.renderizacao.superTableExibirBtnEditarLista}" />
+                    <p:commandButton  icon="pi pi-thumbs-up" title="Teste" action="#{controleDeContasBean.supermercadoSelecionarLista(supermercado)}" update="@form" rendered="#{controleDeContasBean.renderizacao.superTableExibirBtnSelecionarLista}" />
+                </p:column>                        
+
+            </p:dataTable>
+            <h:panelGrid id="idGridTotal" class="gridDescricaoLista" cellspacing="10" columns="2" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}" >
+                <p:outputLabel class="lblNomeLista"  value="Lista:" />
+                <p:outputLabel class="lblValorLista" value="#{controleDeContasBean.supermercado.descricaoLista}" />
+                <p:outputLabel class="lblDataLista" value="Data:" />
+                <h:outputText class="lblValorData"  value="#{controleDeContasBean.supermercado.dataLista}" > 
+                    <f:convertDateTime  locale="pt_BR"  pattern="dd/MM/yyyy"  />
+                </h:outputText>    
+                <p:outputLabel class="lblNomeLista" value="Total:" />
+                <h:outputText  value="#{controleDeContasBean.supermercado.totalTodosItens}">
+                    <f:convertNumber type="currency"   />
+                </h:outputText>
+            </h:panelGrid>
+            <p:sidebar  widgetVar="itensLista"  position="bottom"   >
+                <p:menu style="width: 100%">
+                    <p:menuitem value="Excluir Itens" action="#{controleDeContasBean.renderizacao.supermercadoExibirTableBtnDeletarLista()}"  icon="fas fa-vote-yea" update="@form" />
+                </p:menu>
+                <p:commandButton class="btnVoltarSlideBar" value="Voltar" oncomplete="PF('edtarDeletarSelecionar').hide()"/>
+            </p:sidebar>
+            <h:panelGrid columns="4" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}" width="100%" >
+                <span class="ui-inputgroup-addon"><i class="fa fa-fw fa-cart-plus"></i></span>
+                <p:inputText class="txtAdicionarItens" value="#{controleDeContasBean.supermercado.item}" id="idTxtNomeItem"   placeholder="Nome do item" /> 
+                <p:commandButton  id="idBtnSalvarItem" icon="pi pi-save" action="#{controleDeContasBean.supermercadoSalvarItensDuranteCompra()}" update="@form"  />
+                <p:commandButton id="idBtnAdicionarMaisItens"  icon="fa fa-plus" action="#{controleDeContasBean.renderizacao.supermercadoExibirItensSupermercado()}" update="@form"  />
+            </h:panelGrid>
+            <p:dataTable class="dataTableItensSupermercado"  id="idDataTableItensLista" scrollable="true" expandableRowGroups="true" sortBy="#{supermercado.idListaCompra}" editable="true" editMode="cell" widgetVar="cellProducts" scrollHeight="240" value="#{controleDeContasBean.listSupermercado}" var="supermercado"
+                         style="font-size: 100%;font-family: 'Hind',sans-serif;margin-top: 3%;text-align: left" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}" >
+                <p:ajax event="cellEdit" listener="#{controleDeContasBean.supermercadoSelecionarItemLista(supermercado)}"  update="@form:supermercado:idDataTableItensLista"/>
+                <p:ajax event="cellEdit" listener="#{controleDeContasBean.onCellEdit}"  update="@form:supermercado:idFieldSupermercado:idGridTotal"/>
+                <f:facet name="header" >
+                    <p:outputLabel value="Itens" />
+                    <p:commandButton style="font-size: 80%!important;margin-left: 2%!important;" type="button" icon="pi pi-list"  onclick="PF('itensLista').show()" />   
+                </f:facet>
+
+                <p:headerRow>
+                    <p:column colspan="3">
+                        <h:outputText value="#{supermercado.item}" />
+                    </p:column>
+                </p:headerRow>
+                <p:column headerText="Item" width="60%" style="text-align: left"  >
+                    <h:outputText value="#{supermercado.item}"  />     
+                </p:column>
+                <p:column headerText="Q." width="1%"  style="text-align: center"  >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{supermercado.quantidade}"  />     
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{supermercado.quantidade}" type="number" />    
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Preço" width="35%"  style="text-align: center"  >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{supermercado.preco}"  >
+                                <f:convertNumber type="currency" /> 
+                            </h:outputText>     
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{supermercado.preco}" type="number"  />    
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>  
+                <p:column width="10%" headerText="" rendered="#{controleDeContasBean.renderizacao.superTableExibirBtnDeletarLista}" >
+                    <p:commandButton class="btnDeletarItemLista" icon="pi pi-times"  action="#{controleDeContasBean.supermercadoDeletarItensPeloId(supermercado)}" update="@form" rendered="#{controleDeContasBean.renderizacao.superTableExibirBtnDeletarLista}" />
+                </p:column>     
+
+
+            </p:dataTable>
+
+        </p:fieldset>
+    </cc:implementation>
+</html>

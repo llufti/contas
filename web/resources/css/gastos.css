@@ -22,7 +22,7 @@
 @media 
 (min-width: 360px){
    
-    .ui-state-default{
+/*    .ui-state-default{
         background-color: white!important;        
     }
     .ui-menu{
@@ -40,28 +40,25 @@
         background-color: white!important;
         border: none
     }
-/*    .ui-fieldset .ui-fieldset-legend{
+    .ui-fieldset .ui-fieldset-legend{
         border-color: blue;
         font-size: 90%!important;
         font-family: 'Hind',sans-serif;
         background-color: white;
         border-radius: 10px 10px 10px 10px;
         font-weight: bold;
-    }*/
+    }
 
     .lblGasto{
         font-size: 100%!important;
         font-family: 'Hind',sans-serif;
         color: #1849d2
     }
-    .gridGasto{
-        font-size: 100%!important;
-        font-family: 'Hind',sans-serif;
-        color: #1849d2
-    }
-    .gridInserirGastos{
-        text-align: center!important;
-    }
+*/    .gridGasto{
+    margin-top: 4%!important;
+    }/*
+*/    .gridInserirGastos{
+    }/*
     .fieldSetRelatorios{
         margin-top: 3%;width: 95%;
         border-color: blue;
@@ -78,10 +75,10 @@
         font-family: 'Hind',sans-serif;
         color: #1849d2;
     }
-    .txtGastoRepete{
+*/    .txtGastoRepete{
         text-align: center!important;
-        margin-left: 5%!important;
-    }
+        width: 20%!important;
+    }/*
     .txtGastoGrid{
         margin-left: 10%!important;
     }
@@ -92,12 +89,10 @@
         font-size: 100%!important;
         font-family: 'Hind',sans-serif;       
     }
-    .gastoRepete{
-        margin-left: 55%!important;
-        border-radius: 10px 10px 10px 10px;
-        background-color: #0eaff5!important;
+*/    .gastoRepete{
+        font-size: 80%!important;
 
-    }
+    }/*
     .ui-radiobutton-icon{
         border-color: black!important;
     }
@@ -113,29 +108,28 @@
     .pi-list{
         color: #18d254;
     }
-    .txtGasto{        
+*/    .txtGasto{        
         text-align: center;
-        margin-left: 11%!important;
-    }
-    .DescricaoGasto{        
+        width: 50%!important;
+    }/*
+*/    .DescricaoGasto{        
         text-align: center;
-        margin-left: 5%!important;
-    }
+    }/*
     .gridValor{
         margin-top: 3%!important;
     }
     .gridMesQueVem{
         margin-top: 3%!important;
     }
-    .gridMesRepete{
-        margin-top: 3%!important;
-    }
+*/    .gridMesRepete{
+        margin-top: 4%!important;
+    }/*
     .btnSalvarCancelarGastoCartao{
         background-color: white;
         font-size: 80%!important;
         border-color:#1849d2!important;
         
-    }
+    }*/
    
 
     .container {

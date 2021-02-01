@@ -13,7 +13,8 @@
       xmlns:re="http://xmlns.jcp.org/jsf/composite/recomp"
       xmlns:ig="http://xmlns.jcp.org/jsf/composite/igccomp"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:cc="http://xmlns.jcp.org/jsf/composite/cccomp">
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite/cccomp"
+      xmlns:su="http://xmlns.jcp.org/jsf/composite/sucomp">
     <h:head>
         <title>Constas</title>
 
@@ -27,7 +28,7 @@
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
         <h:outputStylesheet library="webjars" name="font-awesome/5.13.0/css/all.min-jsf.css" />
         <h:outputStylesheet library="webjars" name="font-awesome/5.13.0/css/v4-shims.min-jsf.css" />
-        <meta name="viewport" content="width=device-width"  />
+        <meta name="viewport" content="width=device-width"  initial-scale="1" user-scalable="no" />
     </h:head>
     <h:body>
         <div  class="container" align="center">
@@ -43,20 +44,11 @@
                 <re:relatorio id="relatorio" />
                 <ig:inserirGastoCartao id="inserirGastoCartao" />
                 <cc:gastosCartaoCredito id="idCartaoCredito" />
-                <p:fieldset legend="Lista De Compras" style="text-align: center!important" rendered="#{controleDeContasBean.renderizacao.superMercado}" >
-                    <div align="center" >
-                        <h:panelGrid columns="1" >
-                            <p:commandButton value="Nova Lista" icon="pi pi-plus" />                        
-                        </h:panelGrid>
-                        <h:panelGrid columns="2" >
-                            <p:inputText id="idTxtNomeLista" style="text-align: center"  placeholder="Nome da lista" /> 
-                            <p:commandButton icon="pi pi-save" />
-                        </h:panelGrid>
-                    </div>
-                </p:fieldset>
-
-
+                <su:supermercado id="supermercado" />
             </h:form>
+
+
+
         </div>
 
     </h:body>

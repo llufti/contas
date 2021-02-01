@@ -19,12 +19,12 @@ import java.sql.SQLException;
 public class GraficoGastosDao {
     
      public static int somarGastosParaGrafico(int mes, int ano) throws ErroSistema{
-         System.out.println("mes + ano " + mes + "/" + ano);
          int totalGastos ;
          int gastos = somarGastosDosMeses(mes, ano);
          int gastosCartao = somarGastosCartaoCredito(mes, ano);
          totalGastos = gastos + gastosCartao;
          return totalGastos;
+         
     }
      public static int somarGastosDosMeses(int mes, int ano) throws ErroSistema{
             int totalDeReceitas= 0;

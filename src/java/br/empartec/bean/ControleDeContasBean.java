@@ -9,6 +9,7 @@ import br.empartec.dao.CartaoCreditoDao;
 import br.empartec.dao.GastosDao;
 import br.empartec.dao.ReceitasDao;
 import br.empartec.dao.ResumoDoMesDao;
+import br.empartec.dao.SupermercadoDao;
 import br.empartec.entidades.CartaoCredito;
 import br.empartec.entidades.Categorias;
 import br.empartec.entidades.ControleDeMesSelecionado;
@@ -16,6 +17,7 @@ import br.empartec.entidades.Gastos;
 import br.empartec.entidades.Receitas;
 import br.empartec.entidades.ResumoDoMes;
 import br.empartec.entidades.SuperClasse;
+import br.empartec.entidades.Supermercado;
 import br.empartec.entidades.TituloDescricao;
 import br.empartec.entidades.Usuarios;
 import br.empartec.grafico.ChartView;
@@ -33,13 +35,21 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.CellEditEvent;
 
 @Named
 @ViewScoped
 public class ControleDeContasBean implements Serializable {
 
+    private Double total;
+    private List<String> cities;
+    private List<String> selectedCities = new ArrayList<>();
     @Inject
     ChartView chartView;
+    private Supermercado supermercado;
+    @Inject
+    private SupermercadoDao supermercadoDao;
     private CartaoCredito cartaoCredito;
     private Gastos gastos;
     private Receitas receitas;
@@ -61,6 +71,7 @@ public class ControleDeContasBean implements Serializable {
     private List<CartaoCredito> listaCartoesCadastrados;
     private List<SuperClasse> listaDeGastosCartao;
     private List<Gastos> listaDeGastos;
+    private List<Supermercado> listSupermercado;
 
     int contador;
 
@@ -84,11 +95,156 @@ public class ControleDeContasBean implements Serializable {
         superClasse = new SuperClasse();
         controleDeMesSelecionado.definirDataEscolhida();
         tituloDescricao.setTituloDescricao("CATEGORIAS");
+        supermercado = new Supermercado();
+        cities = new ArrayList<>();
+        cities.add("Arroz");
+        cities.add("Feijão");
+        cities.add("Macarrão");
+        cities.add("Farinha");
+        cities.add("Chocolate");
+        cities.add("Açucar");
+        cities.add("Bolo");
+        cities.add("Farinha De Trigo");
+        cities.add("Batata");
 
         try {
             calculoDoResumoDoMes();
         } catch (ErroSistema ex) {
             Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    //------------------------Supermercado-----------------
+    public void salvarItensSupermercado() throws ErroSistema {
+        try {
+            supermercadoDao.salvarItensSupermercado(supermercado);
+            int idLista = supermercadoDao.supermercadoBuscarIdLista();
+            supermercado.setIdListaCompra(idLista);
+            supermercadoBuscarItensPeloIdLista();
+            renderizacao.supermercadoExibirDataTableItensLista();
+            supermercado = new Supermercado();
+            adicionarMensagem("Itens Salvos Com Sucesso!", FacesMessage.SEVERITY_INFO);
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
+    public void supermercadoSalvarItensDuranteCompra() throws ErroSistema {
+        try {
+            supermercadoDao.salvarItensSupermercadoDuranteCompra(supermercado);
+            renderizacao.supermercadoExibirDataTableItensLista();
+            supermercadoBuscarItensPeloIdLista();
+            supermercado.setItem("");
+            adicionarMensagem("Itens Salvos Com Sucesso!", FacesMessage.SEVERITY_INFO);
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
+    public void supermercadoExibirTxtNovaLista() {
+        supermercado = new Supermercado();
+        supermercadoBuscarTodasListas();
+        renderizacao.supermercadoExibirDataTableLista();
+        renderizacao.supermercadoExibirTxtNovaLista();
+    }
+
+    public void supermercadoSelecionarLista(Supermercado supermercado) throws ErroSistema {
+        this.supermercado = supermercado;
+        supermercadoBuscarItensPeloIdLista();
+        supermercadoSomarValorTotalListaPeloId();
+        renderizacao.supermercadoExibirDataTableItensLista();
+        renderizacao.supermercadoOcultarTableBtnDeletarLista();
+
+    }
+
+    public void supermercadoEditarNomeLista(Supermercado supermercado) throws ErroSistema {
+        this.supermercado = supermercado;
+        renderizacao.supermercadoExibirTxtNovaLista();
+    }
+
+    public void supermercadoSelecionarItemLista(Supermercado supermercado) {
+        this.supermercado = supermercado;
+
+    }
+
+    public void supermercadoBuscarTodasListas() {
+        try {
+            listSupermercado = supermercadoDao.supermercadoBuscarListas(supermercado);
+            if (listSupermercado == null || listSupermercado.size() < 1) {
+                adicionarMensagem("Nao ha cadastros", FacesMessage.SEVERITY_INFO);
+            }
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
+    public void supermercadoBuscarItensPeloIdLista() {
+        try {
+            listSupermercado = supermercadoDao.supermercadoBuscarItensPeloIdLista(supermercado);
+            if (listSupermercado == null || listSupermercado.size() < 1) {
+                adicionarMensagem("Nao ha cadastros", FacesMessage.SEVERITY_INFO);
+            }
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
+    public void supermercadoSalvarLista() {
+        try {
+            if (!"".equals(supermercado.getDescricaoLista())) {
+                supermercadoDao.salvarListaSupermercado(supermercado, usuarios);
+                adicionarMensagem("Lista Salva com Sucesso!", FacesMessage.SEVERITY_INFO);
+                if (supermercado.getIdListaCompra() == null) {
+                    renderizacao.supermercadoExibirItensSupermercado();
+                } else {
+                    supermercadoDao.supermercadoRenomearNomeDaLista(supermercado, usuarios);
+                    supermercadoBuscarTodasListas();
+                    renderizacao.supermercadoExibirBtnNovaLista();
+                    renderizacao.supermercadoExibirTableBtnSelecionarLista();
+                }
+            } else {
+                adicionarMensagem("Insira o nome da lista!", FacesMessage.SEVERITY_ERROR);
+            }
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
+    public void supermercadoDeletarLista(Supermercado supermercado) throws ErroSistema {
+        try {
+            this.supermercado = supermercado;
+            supermercadoDao.supermercadoDeletarLista(supermercado);
+            supermercadoDao.supermercadoDeletarItensLista(supermercado);
+            listSupermercado.remove(supermercado);
+            renderizacao.supermercadoExibirTableBtnSelecionarLista();
+
+            adicionarMensagem("Deletado com sucesso!", FacesMessage.SEVERITY_INFO);
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+
+    }
+
+    public void supermercadoDeletarItensPeloId(Supermercado supermercado) throws ErroSistema {
+        try {
+            this.supermercado = supermercado;
+            supermercado.setItem("");
+            supermercadoDao.supermercadoDeletarItensPeloId(supermercado);
+            listSupermercado.remove(supermercado);
+            renderizacao.supermercadoOcultarTableBtnDeletarLista();
+            supermercadoBuscarItensPeloIdLista();
+            supermercadoSomarValorTotalListaPeloId();
+            adicionarMensagem("Deletado com sucesso!", FacesMessage.SEVERITY_INFO);
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
 
     }
@@ -135,10 +291,15 @@ public class ControleDeContasBean implements Serializable {
         renderizacao.ocultarTodasDespesasDoCartao();
 
     }
+
     public void exibirTelaSupermercado() throws ErroSistema {
+        supermercadoBuscarTodasListas();
         renderizacaoSubTelas.tituloSemMenuOcultar();
+        renderizacao.supermercadoExibirBtnNovaLista();
+        renderizacao.supermercadoExibirDataTableLista();
         renderizacao.exibirSupermercado();
-         
+        renderizacao.supermercadoExibirTableBtnSelecionarLista();
+
     }
 
     public void exibirTelaInserirReceitas() throws ErroSistema {
@@ -293,6 +454,7 @@ public class ControleDeContasBean implements Serializable {
         tituloDescricao.setTituloDescricao("CARTÃO");
         renderizacao.exibirTelaSelecionarCartao();
         renderizacao.ocultarTodasDespesasDoCartao();
+        renderizacao.exibirSelecionar();
 
         renderizacaoSubTelas.tituloComMenuCartaoDeCreditoExibir();
 
@@ -585,6 +747,84 @@ public class ControleDeContasBean implements Serializable {
 
     public void setListaDeGastosCartao(List<SuperClasse> listaDeGastosCartao) {
         this.listaDeGastosCartao = listaDeGastosCartao;
+    }
+
+    public Supermercado getSupermercado() {
+        return supermercado;
+    }
+
+    public void setSupermercado(Supermercado supermercado) {
+        this.supermercado = supermercado;
+    }
+
+    public SupermercadoDao getSupermercadoDao() {
+        return supermercadoDao;
+    }
+
+    public void setSupermercadoDao(SupermercadoDao supermercadoDao) {
+        this.supermercadoDao = supermercadoDao;
+    }
+
+    public List<String> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<String> cities) {
+        this.cities = cities;
+    }
+
+    public List<String> getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(List<String> selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+
+    public List<Supermercado> getListSupermercado() {
+        return listSupermercado;
+    }
+
+    public void setListSupermercado(List<Supermercado> listSupermercado) {
+        this.listSupermercado = listSupermercado;
+    }
+
+    public void supermercadoSomarValorTotalListaPeloId() throws ErroSistema {
+        Double totalTodosItensDaLista;
+        totalTodosItensDaLista = supermercadoDao.supermercadoBuscarTotalTodosItensListaPeloId(supermercado.getIdListaCompra());
+        supermercado.setTotalTodosItens(totalTodosItensDaLista);
+    }
+
+    public void onCellEdit(CellEditEvent event) throws ErroSistema {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        if (newValue != null && !newValue.equals(oldValue)) {
+            String teste = newValue.getClass().getName();
+            if (teste.contains("Integer")) {
+                supermercadoDao.supermercadoSalvarQuantidadeItem(supermercado, usuarios);
+                int quantidade = supermercadoDao.supermercadoBuscarQuantidadePeloIdItem(supermercado);
+                Double preco = supermercadoDao.supermercadoBuscarPrecoPeloIdItem(supermercado);
+                total = quantidade * preco;
+                supermercadoDao.supermercadoSalvarTotalItem(supermercado, usuarios);
+                supermercadoSomarValorTotalListaPeloId();
+            } else {
+                supermercadoSomarValorTotalListaPeloId();
+                supermercadoDao.supermercadoSalvarValorItem(supermercado, usuarios);
+                int quantidade = supermercadoDao.supermercadoBuscarQuantidadePeloIdItem(supermercado);
+                Double preco = supermercadoDao.supermercadoBuscarPrecoPeloIdItem(supermercado);
+                total = quantidade * preco;
+                supermercadoDao.supermercadoSalvarTotalItem(supermercado, usuarios);
+                supermercadoSomarValorTotalListaPeloId();
+            }
+        }
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
 }

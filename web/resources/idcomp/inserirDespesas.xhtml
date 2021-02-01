@@ -12,45 +12,37 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <p:panel id="panelInserirGastos" style="background-color: white!important;border: none" rendered="#{controleDeContasBean.renderizacao.inserirDespesas == true}">
+        <p:panel id="panelInserirGastos" style="border: none; " rendered="#{controleDeContasBean.renderizacao.inserirDespesas == true}">
 
-                <p:defaultCommand target="btnInserirGastos" scope="panelInserirGastos"  />
-                <h:panelGrid id="gridInserirGastos" class="gridInserirGastos" cellspacing="15" >
+            <p:defaultCommand target="btnInserirGastos" scope="panelInserirGastos"  />
+            <div align="left">
+                <h:panelGrid columns="2" id="gridInserirGastos" class="gridInserirGastos" cellspacing="15" >
 
-                    <h:panelGrid columns="2" class="gridGasto"   >
-                        <p:outputLabel id="idLblGasto" class="lblGasto" value="GASTO:"  />
-                        <p:inputText id="idTxtDescricaoGasto" class="DescricaoGasto" value="#{controleDeContasBean.gastos.descGasto}" size="15" />
-                    </h:panelGrid>
+                    <p:outputLabel id="idLblGasto" class="lblGasto" value="GASTO:"  />
+                    <p:inputText id="idTxtDescricaoGasto" class="DescricaoGasto" value="#{controleDeContasBean.gastos.descGasto}"  />
 
-                    <h:panelGrid columns="3" class="gridGasto">
-                        <p:outputLabel id="idLblValorGasto" class="valorGasto" value="VALOR:"  />
-                        <p:inputNumber id="idTxtGasto" class="txtGasto" size="5" value="#{controleDeContasBean.gastos.valor}"  >
-                        </p:inputNumber>  
-                        <p:commandButton id="idBtnGastoRepete" class="gastoRepete"  icon="fa fa-fw fa-retweet" action="#{controleDeContasBean.renderizacao.exibirMesesQueRepete()}" 
-                                         update="@form" />
-                    </h:panelGrid>
+                    <p:outputLabel id="idLblValorGasto" class="valorGasto" value="VALOR:"  />
+                    <p:inputText type="number" id="idTxtGasto" class="txtGasto" size="1" value="#{controleDeContasBean.gastos.valor}"  />
 
+                    <p:outputLabel id="idLblMeses" class="lblMeses" value="MESES" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  />
+                    <p:inputText id="idTxtGastoRepete" type="number" class="txtGastoRepete" value="#{controleDeContasBean.gastos.gastosRepete}" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  />
+                </h:panelGrid>
+            </div>
+<!--            <h:panelGrid  class="gridGasto" columns="3"  rendered="#{controleDeContasBean.renderizacao.selecionarProximoMes == true}">
+            <p:outputLabel id="lblProximoMes" class="proximoMes" value="PROXIMO MES:"  />
+            <p:selectOneRadio id="idRadioGastoProximoMes" class="radioRadioProximoMes" unselectable="true" value="#{controleDeContasBean.gastos.proximoMes}"  >
+                <f:selectItem itemLabel="SIM" itemValue="sim"   />                            
+                <f:selectItem itemLabel="NÃO" itemValue="nao"   />                            
+            </p:selectOneRadio>
+        </h:panelGrid>-->
+            <h:panelGrid id="idGridMesQueVem" columns="2" class="gridMesRepete" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  >
+            </h:panelGrid>
+            <p:commandButton id="idBtnGastoRepete" value="Gasto Fixo ?" class="gastoRepete"  icon="fa fa-fw fa-retweet" action="#{controleDeContasBean.renderizacao.exibirMesesQueRepete()}" update="@form" />
 
-                    <h:panelGrid id="idGridMesQueVem" class="gridGasto" columns="3"  rendered="#{controleDeContasBean.renderizacao.selecionarProximoMes == true}">
-                        <p:outputLabel id="lblProximoMes" class="proximoMes" value="PROXIMO MES:"  />
-                        <p:selectOneRadio id="idRadioGastoProximoMes" class="radioRadioProximoMes" unselectable="true" value="#{controleDeContasBean.gastos.proximoMes}"  >
-                            <f:selectItem itemLabel="SIM" itemValue="sim"   />                            
-                            <f:selectItem itemLabel="NÃO" itemValue="nao"   />                            
-                        </p:selectOneRadio>
-                    </h:panelGrid>
-
-
-                    <h:panelGrid columns="2" class="gridMesRepete" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  >
-                        <p:outputLabel id="idLblMeses" class="lblMeses" value="MESES QUE REPETE:"  />
-
-                        <p:inputText id="idTxtGastoRepete" class="txtGastoRepete" value="#{controleDeContasBean.gastos.gastosRepete}" size="1" />
-                    </h:panelGrid>
-                </h:panelGrid> 
-                <div align="center" style="margin-top: 5%;margin-left: 3%">
-                    <p:commandButton   style="border-color: green;background-color: white;font-size: 80%;border-color:#1849d2;margin-left: 0% " action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  value="VOLTAR" />
-                    <p:commandButton id="btnInserirGastos" style="border-color: green;background-color: white;font-size: 80%;border-color:#1849d2;margin-left: 10% " 
-                                     action="#{controleDeContasBean.salvarDespesas()}" update="@form"  value="SALVAR" /> 
-                </div>
+            <h:panelGrid  columns="2" cellspacing="30" >
+                <p:commandButton    action="#{controleDeContasBean.exibirTelaCategoriasGasto()}" update="@form"  value="VOLTAR" />
+                <p:commandButton id="btnInserirGastos"  action="#{controleDeContasBean.salvarDespesas()}" update="@form"  value="SALVAR" /> 
+            </h:panelGrid>
 
         </p:panel>
     </cc:implementation>

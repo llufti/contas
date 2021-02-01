@@ -26,8 +26,8 @@
                     <p:menuitem value="Visualizar Receitas" action="#{controleDeContasBean.exibirTabelaReceitas()}"   icon="pi pi-search" update="@form" />
                 </p:submenu>
                 <p:submenu label="Serviços">
+                    <p:menuitem value="Supermercado" action="#{controleDeContasBean.exibirTelaSupermercado()}" icon="fas fa-shopping-cart" update="@form" />
                     <p:menuitem value="Rascunho(Despesas)" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
-                    <p:menuitem value="Supermercado" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
                     <p:menuitem value="Saude Finaceira" action="#{lubPecasBean.mudarParaVendas()}"  icon="pi pi-search-minus" update="@form" />
                 </p:submenu>
 
@@ -102,7 +102,7 @@
                    
 
                 </h:panelGrid>
-        <p:panel rendered="false">
+        <p:panel rendered="#{controleDeContasBean.renderizacao.superMercado == false}" >
             
             <h:panelGrid columns="1" rendered="#{controleDeContasBean.renderizacaoSubTelas.tituloSemMenu}"  >
                 <p:outputLabel value="#{controleDeContasBean.tituloDescricao.tituloDescricao}" class="lblTituloDescricao" />

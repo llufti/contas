@@ -5,14 +5,107 @@ public class Renderizacao {
     int controle = 1;
     int controle2 = 1;
 
-    private String estadoTela = "mercadoSuper";
+    private String estadoTela = "despesasCategorias";
     private String gastoRepete = " ";
     private String receitaRepete = " ";
     private String btnVisualizarResumo = "exibir";
     private String lblTituloDescricao = "exibir";
+    private String supermercado = "listaNova";
+    private String txtNovaLista = "exibir";
+    private String supermercadoDatableAcoes = "listaBtnSelecionar";
+
+    public boolean isSuperTableExibirBtnSelecionarLista() {
+        return "listaBtnSelecionar".equals(supermercadoDatableAcoes);
+    }
+
+    public void supermercadoExibirTableBtnSelecionarLista() {
+        supermercadoDatableAcoes = "listaBtnSelecionar";
+    }
+    public boolean isSuperTableExibirBtnDeletarLista() {
+        return "listaBtnDeletar".equals(supermercadoDatableAcoes);
+    }
+
+    public void supermercadoExibirTableBtnDeletarLista() {
+        supermercadoDatableAcoes = "listaBtnDeletar";
+    }
+    public void supermercadoOcultarTableBtnDeletarLista() {
+        supermercadoDatableAcoes = "";
+    }
+    public boolean isSuperTableExibirBtnEditarLista() {
+        return "listaBtnEditar".equals(supermercadoDatableAcoes);
+    }
+
+    public void supermercadoExibirTableBtnEditarLista() {
+        supermercadoDatableAcoes = "listaBtnEditar";
+    }
+    public boolean isSuperTableExibirBtnAdicionarItens() {
+        return "itensListaAdicionar".equals(supermercadoDatableAcoes);
+    }
+
+    public void supermercadoExibirTableBtnAdicionarItens() {
+        supermercadoDatableAcoes = "itensListaAdicionar";
+    }
+
+   
+    public boolean isSupermercadoDataTableItensLista() {
+        return "listaItens".equals(supermercado);
+    }
+
+    public void supermercadoExibirDataTableItensLista() {
+        supermercado = "listaItens";
+    }
+
+    public void supermercadoOcultarDataTableItensLista() {
+        supermercado = "";
+    }
+    public boolean isSupermercadoBtnNovaLista() {
+        return "listaNova".equals(txtNovaLista);
+    }
+
+    public void supermercadoExibirBtnNovaLista() {
+        supermercado = "txtNovaLista";
+    }
+
+    public void supermercadoOcultarBtnNovaLista() {
+        txtNovaLista = "";
+    }
     
+     public boolean isSupermercadoTxtNovaLista() {
+        return "novaTxt".equals(supermercado);
+    }
+
+    public void supermercadoExibirTxtNovaLista() {
+        supermercado = "novaTxt";
+    }
+
+    public void supermercadoOcultarTxtNovaLista() {
+        supermercado = "";
+    }
+     public boolean isSupermercadoDataTableLista() {
+        return "listaDataTable".equals(supermercado);
+    }
+
+    public void supermercadoExibirDataTableLista() {
+        supermercado = "listaDataTable";
+    }
+
+    public void supermercadoOcultarDataTableLista() {
+        supermercado = "";
+    }
     
-      public boolean isSuperMercado() {
+      public boolean isSupermercadoItens() {
+        return "itensSupermercado".equals(supermercado);
+    }
+
+    public void supermercadoExibirItensSupermercado() {
+        supermercado = "itensSupermercado";
+    }
+
+    public void supermercadoOcultarItensSupermercado() {
+        supermercado = "";
+    }
+
+    public boolean isSuperMercado() {
         return "mercadoSuper".equals(estadoTela);
     }
 
@@ -23,6 +116,7 @@ public class Renderizacao {
     public void ocultarSupermercado() {
         estadoTela = "";
     }
+
     public boolean isResumoDoMes() {
         return "exibir".equals(btnVisualizarResumo);
     }
@@ -86,6 +180,7 @@ public class Renderizacao {
     public void exibirInserirDespesasCartao() {
         estadoTela = "cartaoInserirGastos";
     }
+
     public void ocultarInserirDespesasCartao() {
         estadoTela = " ";
     }
@@ -170,7 +265,6 @@ public class Renderizacao {
         return "colunaDeleta".equals(colunaEditaDeleta);
     }
 
-
     public boolean isDataTableTotalCategorias() {
         return "totalCategoriasDataTable".equals(relatorio);
     }
@@ -182,6 +276,7 @@ public class Renderizacao {
     public void ocultarDataTableColunaDelEdit() {
         colunaEditaDeleta = "";
     }
+
     public boolean isDataTableDeGastos() {
         return "dataTableGastos".equals(relatorio);
     }
@@ -189,7 +284,8 @@ public class Renderizacao {
     public void exibirDataTableDeGastos() {
         relatorio = "dataTableGastos";
     }
-      public void ocultarDataTableDeGastos() {
+
+    public void ocultarDataTableDeGastos() {
         relatorio = " ";
     }
 
@@ -208,6 +304,7 @@ public class Renderizacao {
     public void exibirColunaDeleta() {
         colunaEditaDeleta = "colunaDeleta";
     }
+
     public boolean isCartaoTodasAsDespesas() {
         return "despesasTodasCartao".equals(relatorio);
     }
