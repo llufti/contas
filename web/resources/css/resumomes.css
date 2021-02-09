@@ -21,6 +21,15 @@
 
 @media 
 (min-width: 360px){ 
+    .ui-selectmanycheckbox{
+        text-align: left!important;
+    }
+    .ui-chkbox{
+        text-align: left!important;
+    }
+    .ui-chkbox-box{
+        text-align: left!important;
+    }
     .pi-dollar{
         font-size: 140%!important;
     }

@@ -53,7 +53,7 @@
                 <h:panelGrid columns="2" class="gridMesRepete" rendered="#{controleDeContasBean.renderizacao.gastosRepetem == true}"  >
                     <p:outputLabel id="idLblMesesCartao" class="lblMeses" value="MESES QUE REPETE:"  />
 
-                    <p:inputText id="idTxtGastoRepeteCartao" class="txtGastoRepete" value="#{controleDeContasBean.gastos.gastosRepete}" size="1" />
+                    <p:inputText id="idTxtGastoRepeteCartao" type="number" class="txtGastoRepete" value="#{controleDeContasBean.gastos.gastosRepete}" size="7" />
                 </h:panelGrid>
             </h:panelGrid> 
             <h:panelGrid columns="2" cellspacing="15" >

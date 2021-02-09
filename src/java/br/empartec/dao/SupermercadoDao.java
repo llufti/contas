@@ -187,7 +187,7 @@ public class SupermercadoDao implements Serializable {
     }
 
     public void salvarItensSupermercado(Supermercado supermercado) throws ErroSistema {
-        for (String item : cdcb.getSelectedCities()) {
+        for (String item : cdcb.getItensSelecionados()) {
             supermercado = new Supermercado();
             supermercado.setItem(item);
             try {
@@ -201,7 +201,7 @@ public class SupermercadoDao implements Serializable {
                 ps.execute();
 
             } catch (SQLException ex) {
-                throw new ErroSistema("Erro ao inserir", ex);
+                throw new ErroSistema("Existem itens Repitidos" + ex, ex);
             }
             FabricaConexao.fecharConexao();
         }

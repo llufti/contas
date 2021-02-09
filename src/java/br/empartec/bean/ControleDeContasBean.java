@@ -26,12 +26,15 @@ import br.empartec.visualizacao.Renderizacao;
 import br.empartec.visualizacao.RenderizacaoSubTelas;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,7 +46,7 @@ import org.primefaces.event.CellEditEvent;
 public class ControleDeContasBean implements Serializable {
 
     private Double total;
-    private List<String> cities;
+    private List<String> itensSupermercado = new ArrayList<>();
     private List<String> selectedCities = new ArrayList<>();
     @Inject
     ChartView chartView;
@@ -72,6 +75,8 @@ public class ControleDeContasBean implements Serializable {
     private List<SuperClasse> listaDeGastosCartao;
     private List<Gastos> listaDeGastos;
     private List<Supermercado> listSupermercado;
+    private List<SelectItem> itensMercado;
+    private String[] itensSelecionados;
 
     int contador;
 
@@ -96,17 +101,7 @@ public class ControleDeContasBean implements Serializable {
         controleDeMesSelecionado.definirDataEscolhida();
         tituloDescricao.setTituloDescricao("CATEGORIAS");
         supermercado = new Supermercado();
-        cities = new ArrayList<>();
-        cities.add("Arroz");
-        cities.add("Feijão");
-        cities.add("Macarrão");
-        cities.add("Farinha");
-        cities.add("Chocolate");
-        cities.add("Açucar");
-        cities.add("Bolo");
-        cities.add("Farinha De Trigo");
-        cities.add("Batata");
-
+        criarListaSupermercado();
         try {
             calculoDoResumoDoMes();
         } catch (ErroSistema ex) {
@@ -115,7 +110,70 @@ public class ControleDeContasBean implements Serializable {
 
     }
 
+    public void criarListaSupermercado() {
+        itensMercado = new ArrayList<>();
+        SelectItemGroup cafeDaManha = new SelectItemGroup("Mercearia");
+        cafeDaManha.setSelectItems(new SelectItem[]{
+            new SelectItem("Arroz", "Arroz"),
+            new SelectItem("Feijão", "Feijão"),
+            new SelectItem("Óleo", "Óleo"),
+            new SelectItem("Azeite de oliva", "Azeite de oliva"),
+            new SelectItem("Vinagre", "Vinagre"),
+            new SelectItem("Açúcar", "Açúcar"),
+            new SelectItem("Milho para pipoca", "Milho para pipoca"),
+            new SelectItem("Farinha de trigo", "Farinha de trigo"),
+            new SelectItem("Fermento em pó", "Fermento em pó"),
+            new SelectItem("Aveia", "Aveia"),
+            new SelectItem("Cereais", "Cereais"),
+            new SelectItem("Amido de milho", "Amido de milho"),
+            new SelectItem("Farinha de mandioca", "Farinha de mandioca"),
+            new SelectItem("Extrato de tomate", "Extrato de tomate"),
+            new SelectItem("Macarrão", "Macarrão"),
+            new SelectItem("Queijo ralado", "Queijo ralado"),
+            new SelectItem("Enlatados", "Enlatados"),
+            new SelectItem("Bolachas", "Bolachas"),
+            new SelectItem("Petiscos", "Petiscos"),
+            new SelectItem("Pães", "Pães"),
+            new SelectItem("Maionese", "Maionese"),
+            new SelectItem("Ketchup", "Ketchup"),
+            new SelectItem("Mostarda", "Mostarda"),
+            new SelectItem("Manteiga", "Manteiga"),
+            new SelectItem("Requeijão", "Requeijão"),
+            new SelectItem("Frios", "Frios"),
+            new SelectItem("Mel", "Mel"),
+            new SelectItem("Sal", "Sal"),
+            new SelectItem("Temperos secos", "Temperos secos"),
+            new SelectItem("Especiarias", "Especiarias"),});
+
+        SelectItemGroup cafeTarde = new SelectItemGroup("Café Da Tarde");
+        cafeTarde.setSelectItems(new SelectItem[]{
+            new SelectItem("Ovos", "Ovos"),
+            new SelectItem("Verduras", "Verduras"),
+            new SelectItem("Legumes", "Legumes"),
+            new SelectItem("Vegetais variados", "Vegetais variados"),
+            new SelectItem("Frutas da estação", "Frutas da estação"),
+            new SelectItem("Cebola", "Cebola"),
+            new SelectItem("Alho", "Alho"),
+            new SelectItem("Ervas e temperos frescos", "Ervas e temperos frescos")
+        });
+
+        itensMercado.add(cafeTarde);
+        itensMercado.add(cafeDaManha);
+
+    }
+
     //------------------------Supermercado-----------------
+    public void exibirListaDeItens() {
+        limparListaItensSelecionados();
+        renderizacao.supermercadoExibirItensSupermercado();
+    }
+
+    public void limparListaItensSelecionados() {
+        if (itensSelecionados != null) {
+            Arrays.fill(itensSelecionados, null);
+        }
+    }
+
     public void salvarItensSupermercado() throws ErroSistema {
         try {
             supermercadoDao.salvarItensSupermercado(supermercado);
@@ -145,6 +203,7 @@ public class ControleDeContasBean implements Serializable {
     }
 
     public void supermercadoExibirTxtNovaLista() {
+        limparListaItensSelecionados();
         supermercado = new Supermercado();
         supermercadoBuscarTodasListas();
         renderizacao.supermercadoExibirDataTableLista();
@@ -765,12 +824,12 @@ public class ControleDeContasBean implements Serializable {
         this.supermercadoDao = supermercadoDao;
     }
 
-    public List<String> getCities() {
-        return cities;
+    public List<String> getItensSupermercado() {
+        return itensSupermercado;
     }
 
-    public void setCities(List<String> cities) {
-        this.cities = cities;
+    public void setItensSupermercado(List<String> itensSupermercado) {
+        this.itensSupermercado = itensSupermercado;
     }
 
     public List<String> getSelectedCities() {
@@ -817,6 +876,22 @@ public class ControleDeContasBean implements Serializable {
                 supermercadoSomarValorTotalListaPeloId();
             }
         }
+    }
+
+    public List<SelectItem> getItensMercado() {
+        return itensMercado;
+    }
+
+    public void setItensMercado(List<SelectItem> itensMercado) {
+        this.itensMercado = itensMercado;
+    }
+
+    public String[] getItensSelecionados() {
+        return itensSelecionados;
+    }
+
+    public void setItensSelecionados(String[] itensSelecionados) {
+        this.itensSelecionados = itensSelecionados;
     }
 
     public Double getTotal() {

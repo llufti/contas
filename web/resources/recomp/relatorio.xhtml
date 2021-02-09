@@ -57,7 +57,7 @@
                     <p:column headerText="VALOR(R$)" style="width: 30%;text-align: center!important"   >
 
                         <h:outputText value="#{gastos.valor}"  >
-                            <f:convertNumber type="currency"  />
+                            <f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" />
                         </h:outputText>
 
                     </p:column>    
@@ -65,9 +65,9 @@
                         <p:column colspan="1" style="text-align:right; font-weight: bold">
                             <h:outputText value="Total:" />
                         </p:column>
-                        <p:column  >
+                        <p:column>
                             <h:outputText value="#{gastos.totalGastos}">
-                                <f:convertNumber type="currency" />
+                                <f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" />
                             </h:outputText>
                         </p:column>
                     </p:summaryRow>                    

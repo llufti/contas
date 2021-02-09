@@ -18,17 +18,20 @@
                 <h:panelGrid columns="2" rendered="#{controleDeContasBean.renderizacao.supermercadoTxtNovaLista == false}" >
                     <p:commandButton value="Voltar" icon="pi pi-step-backward-alt" action="#{controleDeContasBean.exibirTelaSupermercado()}" update="@form" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}"  />                        
                     <p:commandButton value="Nova Lista" icon="pi pi-plus" action="#{controleDeContasBean.supermercadoExibirTxtNovaLista()}" update="@form:supermercado:idFieldSupermercado" />                        
+                    <p:commandButton value="Salvar" action="#{controleDeContasBean.salvarItensSupermercado()}" update="@form" rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2" rendered="#{controleDeContasBean.renderizacao.supermercadoTxtNovaLista}" >
                     <p:inputText value="#{controleDeContasBean.supermercado.descricaoLista}" id="idTxtNomeLista" style="text-align: center"  placeholder="Nome da lista" /> 
                     <p:commandButton id="idBtnSalvarLista" icon="pi pi-save" action="#{controleDeContasBean.supermercadoSalvarLista()}" update="@form"  />
                 </h:panelGrid>
+                <div align="left">
+                    <p:selectManyCheckbox id="grid" value="#{controleDeContasBean.itensSelecionados}" layout="pageDirection" columns="2"  rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" >
+                        <f:selectItems value="#{controleDeContasBean.itensMercado}" var="itensMercado" itemLabel="#{itensMercado}" itemValue="#{itensMercado}"  />
+                    </p:selectManyCheckbox>
 
-                <p:selectManyCheckbox id="grid" value="#{controleDeContasBean.selectedCities}" layout="grid" columns="2" styleClass="grid-checkbox" rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" >
-                    <f:selectItems value="#{controleDeContasBean.cities}" var="city" itemLabel="#{city}" itemValue="#{city}"  />
-                </p:selectManyCheckbox>
-                <p:commandButton value="Salvar" action="#{controleDeContasBean.salvarItensSupermercado()}" update="@form" rendered="#{controleDeContasBean.renderizacao.supermercadoItens}" />
-            </div>   
+                </div>
+            </div>  
+
             <p:sidebar  widgetVar="edtarDeletarSelecionar"  position="bottom"   >
                 <p:menu style="width: 100%">
                     <p:menuitem value="Selecionar Lista" action="#{controleDeContasBean.renderizacao.supermercadoExibirTableBtnSelecionarLista()}" icon="fas fa-thumbs-up" update="@form" />
@@ -69,7 +72,7 @@
                 </h:outputText>    
                 <p:outputLabel class="lblNomeLista" value="Total:" />
                 <h:outputText  value="#{controleDeContasBean.supermercado.totalTodosItens}">
-                    <f:convertNumber type="currency"   />
+                    <f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$"  />
                 </h:outputText>
             </h:panelGrid>
             <p:sidebar  widgetVar="itensLista"  position="bottom"   >
@@ -82,7 +85,7 @@
                 <span class="ui-inputgroup-addon"><i class="fa fa-fw fa-cart-plus"></i></span>
                 <p:inputText class="txtAdicionarItens" value="#{controleDeContasBean.supermercado.item}" id="idTxtNomeItem"   placeholder="Nome do item" /> 
                 <p:commandButton  id="idBtnSalvarItem" icon="pi pi-save" action="#{controleDeContasBean.supermercadoSalvarItensDuranteCompra()}" update="@form"  />
-                <p:commandButton id="idBtnAdicionarMaisItens"  icon="fa fa-plus" action="#{controleDeContasBean.renderizacao.supermercadoExibirItensSupermercado()}" update="@form"  />
+                <p:commandButton id="idBtnAdicionarMaisItens"  icon="fa fa-plus" action="#{controleDeContasBean.exibirListaDeItens()}" update="@form"  />
             </h:panelGrid>
             <p:dataTable class="dataTableItensSupermercado"  id="idDataTableItensLista" scrollable="true" expandableRowGroups="true" sortBy="#{supermercado.idListaCompra}" editable="true" editMode="cell" widgetVar="cellProducts" scrollHeight="240" value="#{controleDeContasBean.listSupermercado}" var="supermercado"
                          style="font-size: 100%;font-family: 'Hind',sans-serif;margin-top: 3%;text-align: left" rendered="#{controleDeContasBean.renderizacao.supermercadoDataTableItensLista}" >
@@ -115,7 +118,7 @@
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{supermercado.preco}"  >
-                                <f:convertNumber type="currency" /> 
+                                <f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" /> 
                             </h:outputText>     
                         </f:facet>
                         <f:facet name="input">
