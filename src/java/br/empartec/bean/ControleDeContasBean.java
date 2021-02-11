@@ -112,8 +112,8 @@ public class ControleDeContasBean implements Serializable {
 
     public void criarListaSupermercado() {
         itensMercado = new ArrayList<>();
-        SelectItemGroup cafeDaManha = new SelectItemGroup("Mercearia");
-        cafeDaManha.setSelectItems(new SelectItem[]{
+        SelectItemGroup mercearia = new SelectItemGroup("Mercearia");
+        mercearia.setSelectItems(new SelectItem[]{
             new SelectItem("Arroz", "Arroz"),
             new SelectItem("Feijão", "Feijão"),
             new SelectItem("Óleo", "Óleo"),
@@ -145,8 +145,8 @@ public class ControleDeContasBean implements Serializable {
             new SelectItem("Temperos secos", "Temperos secos"),
             new SelectItem("Especiarias", "Especiarias"),});
 
-        SelectItemGroup cafeTarde = new SelectItemGroup("Café Da Tarde");
-        cafeTarde.setSelectItems(new SelectItem[]{
+        SelectItemGroup feira = new SelectItemGroup("Feira");
+        feira.setSelectItems(new SelectItem[]{
             new SelectItem("Ovos", "Ovos"),
             new SelectItem("Verduras", "Verduras"),
             new SelectItem("Legumes", "Legumes"),
@@ -156,9 +156,98 @@ public class ControleDeContasBean implements Serializable {
             new SelectItem("Alho", "Alho"),
             new SelectItem("Ervas e temperos frescos", "Ervas e temperos frescos")
         });
-
-        itensMercado.add(cafeTarde);
-        itensMercado.add(cafeDaManha);
+        SelectItemGroup acougue = new SelectItemGroup("Açougue");
+        acougue.setSelectItems(new SelectItem[]{
+            new SelectItem("Bifes", "Bifes"),
+            new SelectItem("Carne moída", "Carne moída"),
+            new SelectItem("Carne de frango", "Carne de frango"),
+            new SelectItem("Filés de peixes", "Filés de peixes"),
+            new SelectItem("Bacon", "Bacon"),
+            new SelectItem("Hambúrgueres", "Hambúrgueres"),
+            new SelectItem("Linguiças", "Linguiças"),
+            new SelectItem("Salsichas", "Salsichas"),
+        });
+        SelectItemGroup bebidas = new SelectItemGroup("Bebidas");
+        bebidas.setSelectItems(new SelectItem[]{
+            new SelectItem("Café", "Café"),
+            new SelectItem("Chás", "Chás"),
+            new SelectItem("Sucos", "Sucos"),
+            new SelectItem("Iogurtes", "Iogurtes"),
+            new SelectItem("Leite", "Leite"),
+            new SelectItem("Achocolatado", "Achocolatado"),
+            new SelectItem("Água mineral", "Água mineral"),
+            new SelectItem("Refrigerantes", "Refrigerantes"),
+            new SelectItem("Bebidas alcoólicas", "Bebidas alcoólicas")
+        });
+        SelectItemGroup higiene = new SelectItemGroup("Higiene Pessoal");
+        higiene.setSelectItems(new SelectItem[]{
+            new SelectItem("Shampoo", "Shampoo"),
+            new SelectItem("Condicionador", "Condicionador"),
+            new SelectItem("Sabonetes", "Sabonetes"),
+            new SelectItem("Sabonete líquido", "Sabonete líquido"),
+            new SelectItem("Cotonetes", "Cotonetes"),
+            new SelectItem("Algodão", "Algodão"),
+            new SelectItem("Papel higiênico", "Papel higiênico"),
+            new SelectItem("Pasta de dente", "Pasta de dente"),
+            new SelectItem("Escova de dente", "Escova de dente"),
+            new SelectItem("Fio dental", "Fio dental"),
+            new SelectItem("Antisséptico bucal", "Antisséptico bucal"),
+            new SelectItem("Porta escova de dentes", "Porta escova de dentes"),
+            new SelectItem("Saboneteira", "Saboneteira"),
+            new SelectItem("Esponja para banho", "Esponja para banho"),
+            new SelectItem("Desodorante", "Desodorante"),
+            new SelectItem("Curativos", "Curativos")
+        });
+        SelectItemGroup limpeza = new SelectItemGroup("Limpeza");
+        limpeza.setSelectItems(new SelectItem[]{
+            new SelectItem("Detergente", "Detergente"),
+            new SelectItem("Desengordurante", "Desengordurante"),
+            new SelectItem("Esponja para louça", "Esponja para louça"),
+            new SelectItem("Palha de aço", "Palha de aço"),
+            new SelectItem("Escova de limpeza", "Escova de limpeza"),
+            new SelectItem("Sabão em barra", "Sabão em barra"),
+            new SelectItem("Balde e bacia", "Balde e bacia"),
+            new SelectItem("Rodo, vassoura, pá", "Rodo, vassoura, pá"),
+            new SelectItem("Panos de limpeza e flanelas", "Panos de limpeza e flanelas"),
+            new SelectItem("Sabão em pó ou líquido", "Sabão em pó ou líquido"),
+            new SelectItem("Amaciante", "Amaciante"),
+            new SelectItem("Água sanitária", "Água sanitária"),
+            new SelectItem("Cesto para roupas", "Cesto para roupas"),
+            new SelectItem("Lixeira", "Lixeira"),
+            new SelectItem("Lixeira para banheiro", "Lixeira para banheiro"),
+            new SelectItem("Escova sanitária", "Escova sanitária"),
+            new SelectItem("Sacos de lixo", "Sacos de lixo"),
+            new SelectItem("Desinfetante", "Desinfetante"),
+            new SelectItem("Limpa vidros", "Limpa vidros"),
+            new SelectItem("Limpa piso", "Limpa piso"),
+            new SelectItem("Limpador multiuso", "Limpador multiuso"),
+            new SelectItem("Álcool", "Álcool"),
+            new SelectItem("Lustrador de móveis", "Lustrador de móveis")
+        });
+        SelectItemGroup utilidades = new SelectItemGroup("Utilidades");
+        utilidades.setSelectItems(new SelectItem[]{
+            new SelectItem("Guardanapos de papel", "Guardanapos de papel"),
+            new SelectItem("Papel toalha", "Papel toalha"),
+            new SelectItem("Papel alumínio", "Papel alumínio"),
+            new SelectItem("Sacos plásticos para alimentos", "Sacos plásticos para alimentos"),
+            new SelectItem("Papel filme", "Papel filme"),
+            new SelectItem("Filtro para café", "Filtro para café"),
+            new SelectItem("Varal para roupas", "Varal para roupas"),
+            new SelectItem("Pregadores", "Pregadores"),
+            new SelectItem("Lâmpadas", "Lâmpadas"),
+            new SelectItem("Fósforos", "Fósforos"),
+            new SelectItem("Velas", "Velas"),
+            new SelectItem("Pilhas", "Pilhas"),
+            new SelectItem("Inseticida", "Inseticida")
+            
+        });
+        itensMercado.add(mercearia);
+        itensMercado.add(feira);
+        itensMercado.add(acougue);
+        itensMercado.add(bebidas);
+        itensMercado.add(higiene);
+        itensMercado.add(limpeza);
+        itensMercado.add(utilidades);
 
     }
 
@@ -181,7 +270,6 @@ public class ControleDeContasBean implements Serializable {
             supermercado.setIdListaCompra(idLista);
             supermercadoBuscarItensPeloIdLista();
             renderizacao.supermercadoExibirDataTableItensLista();
-            supermercado = new Supermercado();
             adicionarMensagem("Itens Salvos Com Sucesso!", FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
             Logger.getLogger(ControleDeContasBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,8 +280,8 @@ public class ControleDeContasBean implements Serializable {
     public void supermercadoSalvarItensDuranteCompra() throws ErroSistema {
         try {
             supermercadoDao.salvarItensSupermercadoDuranteCompra(supermercado);
-            renderizacao.supermercadoExibirDataTableItensLista();
             supermercadoBuscarItensPeloIdLista();
+            renderizacao.supermercadoExibirDataTableItensLista();
             supermercado.setItem("");
             adicionarMensagem("Itens Salvos Com Sucesso!", FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
